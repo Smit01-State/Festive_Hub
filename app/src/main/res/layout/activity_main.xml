@@ -9,6 +9,8 @@
     tools:context=".MainActivity">
 
     <ImageView
+
+        android:layout_marginTop="20dp"
         android:id="@+id/main_image"
         android:layout_centerHorizontal="true"
         android:layout_width="150dp"
@@ -16,7 +18,11 @@
         android:src="@drawable/logo" />
 
     <TextView
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
         android:id="@+id/main_Title"
+        android:textSize="20dp"
         android:layout_below="@+id/main_image"
         android:textColor="#000000"
         android:text= "Login to your Account"
@@ -24,12 +30,97 @@
         android:layout_height="wrap_content"
         />
     <EditText
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
         android:id="@+id/main_Email"
+        android:textSize="14dp"
+        android:inputType="textEmailAddress"
+        android:hint = "Email"
         android:layout_below="@+id/main_Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
+    <EditText
 
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:id="@+id/main_Password"
+        android:textSize="10dp"
+        android:inputType="textPassword"
+        android:hint = "Password"
+        android:layout_below="@+id/main_Email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <Button
+        android:id="@+id/main_button"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_centerHorizontal="true"
+        android:text="Login"
+        android:layout_below="@+id/main_Password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/main_login"
+        android:textSize="14dp"
+        android:layout_below="@+id/main_button"
+        android:textColor="#000000"
+        android:text= "-- or login with --"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <LinearLayout
+        android:id="@+id/main_raf"
+        android:weightSum="3"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_below="@id/main_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:src="@drawable/google"/>
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:src="@drawable/facebook"/>
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:src="@drawable/twitter"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/main_raf"
+        android:id="@+id/main_createAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don't have an Account? "/>
+        <TextView
+            android:textColor="#4facfe"
+            android:textSize="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Account"/>
+
+    </LinearLayout>
 
 
 </RelativeLayout>
