@@ -30,7 +30,6 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:id="@+id/main_Title"
                 android:layout_below="@+id/main_image"
-                android:textColor="#000000"
                 android:text= "Login to your Account"
                 />
 
@@ -46,6 +45,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:id="@+id/main_Email"
                     style="@style/edit_14"
                     android:inputType="textEmailAddress"
                     android:hint = "Email" />
@@ -64,15 +64,16 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:id="@+id/main_Password"
                     style="@style/edit_14"
                     android:inputType="textPassword"
                     android:hint = "Password" />
             </androidx.cardview.widget.CardView>
 
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 style="@style/button_14"
-                android:text="login in"
+                android:text="login"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginHorizontal="@dimen/_20sdp"
                 android:id="@+id/main_button"
