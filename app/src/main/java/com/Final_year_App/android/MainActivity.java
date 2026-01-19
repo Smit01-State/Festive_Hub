@@ -1,10 +1,12 @@
 package com.Final_year_App.android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -19,8 +21,11 @@ public class MainActivity extends AppCompatActivity {
 
     Button login;
     EditText Email, Password;
+    TextView CreateAccount;
 
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+
 
 
     @Override
@@ -37,8 +42,19 @@ public class MainActivity extends AppCompatActivity {
 
         Email = findViewById(R.id.main_Email);
         Password = findViewById(R.id.main_Password);
-
         login = findViewById(R.id.main_button);
+        CreateAccount = findViewById(R.id.main_createAccount);
+
+        CreateAccount.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, CreateAccount.class);
+                        startActivity(intent);
+                    }
+                }
+        );
+
         login.setOnClickListener(
                 new View.OnClickListener(){
             @Override
@@ -59,8 +75,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.w("login","successfully login");
 
                     Toast.makeText(MainActivity.this,"login successfully",Toast.LENGTH_SHORT).show();
-                    Snackbar.make(v, "login successfully",Snackbar.LENGTH_LONG).show();
-
                 }
 
             }
