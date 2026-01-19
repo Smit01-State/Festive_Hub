@@ -20,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar;
 public class MainActivity extends AppCompatActivity {
 
     Button login;
+
     EditText Email, Password;
     TextView CreateAccount;
 
@@ -75,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
                     Log.w("login","successfully login");
 
                     Toast.makeText(MainActivity.this,"login successfully",Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(MainActivity.this, Dashboard.class);
+                    startActivity(intent);
                 }
 
             }
