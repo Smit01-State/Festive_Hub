@@ -46,15 +46,6 @@ public class MainActivity extends AppCompatActivity {
         login = findViewById(R.id.main_button);
         CreateAccount = findViewById(R.id.main_createAccount);
 
-        CreateAccount.setOnClickListener(
-                new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, CreateAccount.class);
-                        startActivity(intent);
-                    }
-                }
-        );
 
         login.setOnClickListener(
                 new View.OnClickListener(){
@@ -82,8 +73,18 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
-        }
+        });
+
+        CreateAccount.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, CreateAccount.class);
+                        startActivity(intent);
+                    }
+                }
         );
+
 
     }
 }
