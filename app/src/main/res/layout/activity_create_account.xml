@@ -123,10 +123,55 @@
 
             </androidx.cardview.widget.CardView>
 
+            <RadioGroup
+                android:id="@+id/Create_radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Create_Confirm_password_card"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_weight="1"
+                    android:id="@+id/Create_radio_male"
+                    style="@style/radio_15"
+                    android:text="Male" />
+
+                <RadioButton
+                    android:layout_weight="1"
+                    android:id="@+id/Create_radio_female"
+                    style="@style/radio_15"
+                    android:text="Female" />
+
+            </RadioGroup>
+            
+            <Spinner
+                android:id="@+id/Create_Spinner"
+                android:layout_below="@+id/Create_radioGroup"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <CheckBox
+                android:layout_marginTop="@dimen/_10sdp"
+                app:buttonTint="@color/blue"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:text="Accpet Terms &amp; Conditions"
+                android:id="@+id/Create_terms"
+                android:layout_below="@id/Create_Spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+
+
             <androidx.appcompat.widget.AppCompatButton
 
                 android:id="@+id/Create_button"
-                android:layout_below="@+id/Create_Confirm_password_card"
+                android:layout_below="@+id/Create_terms"
                 style="@style/button_14"
                 android:text="sign up"
                 android:layout_marginTop="@dimen/_20sdp"

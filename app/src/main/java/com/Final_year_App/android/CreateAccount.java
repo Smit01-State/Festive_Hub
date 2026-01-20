@@ -4,25 +4,42 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.util.ArrayList;
 
 public class CreateAccount extends AppCompatActivity {
 
 Button Signup;
 
 TextView Login;
- EditText name , Email, Contact , Password, ConfirmPassword;
-    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+EditText name , Email, Contact , Password, ConfirmPassword;
+String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+RadioGroup gender;
+CheckBox terms;
+String sgender;
 
+Spinner spinner;
+
+ArrayList<String> cityArray;
+
+String scity = "";
 
 
     @Override
@@ -43,6 +60,52 @@ TextView Login;
         ConfirmPassword = findViewById(R.id.Create_Confirm_password);
         Signup = findViewById(R.id.Create_button);
         Login = findViewById(R.id.Create_login);
+        terms = findViewById(R.id.Create_terms);
+        gender = findViewById(R.id.Create_radioGroup);
+        spinner = findViewById(R.id.Create_Spinner);
+
+        cityArray = new ArrayList<>();
+        cityArray.add("ahemdabad");
+        cityArray.add("vadodra");
+        cityArray.add("surat");
+        cityArray.add("rajkot");
+
+        cityArray.add(0,"Select City");
+
+        ArrayAdapter adapter = new ArrayAdapter(CreateAccount.this, android.R.layout.simple_list_item_1,cityArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position==0){
+                    scity = "";
+                }
+                else {
+                    //sCity = cityArray[i];
+                    scity = cityArray.get(position);
+                    Toast.makeText(CreateAccount.this, scity, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+       gender.setOnCheckedChangeListener(
+               new RadioGroup.OnCheckedChangeListener() {
+                   @Override
+                   public void onCheckedChanged(@NonNull RadioGroup group, int checkedId) {
+                       RadioButton radiobutton = findViewById(checkedId);
+                       sgender = radiobutton.getText().toString();
+                       Toast.makeText(CreateAccount.this, sgender, Toast.LENGTH_SHORT).show();
+                   }
+               }
+       );
 
         Signup.setOnClickListener(
                 new View.OnClickListener(){
@@ -75,6 +138,15 @@ TextView Login;
                         }
                         else if (!ConfirmPassword.getText().toString().matches(Password.getText().toString().trim())) {
                             ConfirmPassword.setError("password not match");
+                        }
+                        else if(gender.getCheckedRadioButtonId() == -1){
+                            Toast.makeText(CreateAccount.this, "Please Select Gender", Toast.LENGTH_SHORT).show();
+                        }
+                        else if(scity == ""){
+                            Toast.makeText(CreateAccount.this, "Please Select City", Toast.LENGTH_SHORT).show();
+                        }
+                        else if(!terms.isChecked()){
+                            Toast.makeText(CreateAccount.this, "Please Accpet Terms & Conditions", Toast.LENGTH_SHORT).show();
                         }
                         else{
                             System.out.println("signup successfully");
