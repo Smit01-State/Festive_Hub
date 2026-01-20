@@ -9,6 +9,8 @@ activity = "1.11.0"
 constraintlayout = "2.1.4"
 
 sdp = "1.1.1"
+navigationFragment = "2.6.0"
+navigationUi = "2.6.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -21,6 +23,8 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 
 #sdp = {group = "com.intuit.sdp", name = "sdp-android", version.ref="sdp"}
 sdp = {module= "com.intuit.sdp:sdp-android",version.ref = "sdp"}
+navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
+navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 

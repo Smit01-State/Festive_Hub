@@ -17,7 +17,7 @@
         style="@style/text_20"
         android:text="Dashboard"
         />
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
       style="@style/button_14"
         android:id="@+id/backButton"
         android:layout_below="@+id/info"

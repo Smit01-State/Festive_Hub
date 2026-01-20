@@ -10,15 +10,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.New_project" >
+        android:theme="@style/Theme.Final_year_App" >
+
         <activity
             android:name=".CreateAccount"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".Dashboard"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true" >
