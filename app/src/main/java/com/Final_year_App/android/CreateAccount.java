@@ -1,6 +1,7 @@
 package com.Final_year_App.android;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
@@ -41,6 +42,8 @@ ArrayList<String> cityArray;
 
 String scity = "";
 
+SQLiteDatabase db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +72,14 @@ String scity = "";
         cityArray.add("vadodra");
         cityArray.add("surat");
         cityArray.add("rajkot");
-
         cityArray.add(0,"Select City");
+
+
+        db = openOrCreateDatabase("finalApp",MODE_PRIVATE,null);
+        String createTable = "CREATE TABLE  IF NOT EXISTS FUSER(USERID INTEGER PRIMARY KEY AUTOINCREMENT ,NAME VARCHAR(50),EMAIL VARCHAR(20),CONTACTS BIGINT(10),PASSWORD VARCHAR(10),GENDER ENUM,CITY VARCHAR(10))";
+        db.execSQL(createTable);
+
+
 
         ArrayAdapter adapter = new ArrayAdapter(CreateAccount.this, android.R.layout.simple_list_item_1,cityArray);
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
@@ -149,8 +158,17 @@ String scity = "";
                             Toast.makeText(CreateAccount.this, "Please Accpet Terms & Conditions", Toast.LENGTH_SHORT).show();
                         }
                         else{
+
+                            String InsertQuery = "INSERT INTO FUSER (NAME,EMAIL,CONTACTS,PASSWORD,GENDER,CITY) values('"+name.getText().toString()+"','"+Email.getText().toString()+"','"+Contact.getText().toString()+"','"+Password.getText().toString()+"','"+sgender+"','"+scity+"')";
+                            db.execSQL(InsertQuery);
+
                             System.out.println("signup successfully");
                             Toast.makeText(CreateAccount.this,"signup Successfully",Toast.LENGTH_SHORT).show();
+
+                            Intent intent = new Intent(CreateAccount.this, MainActivity.class);
+                            startActivity(intent);
+
+                            onBackPressed();
                         }
 
                     }

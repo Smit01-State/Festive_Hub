@@ -1,6 +1,8 @@
 package com.Final_year_App.android;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
+    SQLiteDatabase db;
+
 
 
 
@@ -47,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
         CreateAccount = findViewById(R.id.main_createAccount);
 
 
+        db = openOrCreateDatabase("finalApp",MODE_PRIVATE,null);
+
+
         login.setOnClickListener(
                 new View.OnClickListener(){
             @Override
@@ -60,16 +67,31 @@ public class MainActivity extends AppCompatActivity {
                     Password.setError("password required");
                 } else if (Password.getText().toString().trim().length()<6){
                     Password.setError("valid Length(minimum 6) required");
-                } else{
-                    System.out.println("login successfully");
-                    Log.d("login","successfully login");
-                    Log.e("login","successfully login");
-                    Log.w("login","successfully login");
+                }
+                else{
 
-                    Toast.makeText(MainActivity.this,"login successfully",Toast.LENGTH_SHORT).show();
+                    String SelectQuery = "SELECT * FROM FUSER WHERE (EMAIL='"+Email.getText().toString()+"' or CONTACTS = '"+Email.getText().toString()+"' ) and PASSWORD = '"+Password.getText().toString()+"' ";
+                    Cursor cursor = db.rawQuery(SelectQuery,null);
 
-                    Intent intent = new Intent(MainActivity.this, Dashboard.class);
-                    startActivity(intent);
+                    if(cursor.getCount()>0){
+
+                        System.out.println("login successfully");
+                        Log.d("login","successfully login");
+                        Log.e("login","successfully login");
+                        Log.w("login","successfully login");
+
+                        Toast.makeText(MainActivity.this,"login successfully",Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(MainActivity.this, Dashboard.class);
+                        startActivity(intent);
+
+                    }else {
+
+                        Toast.makeText(MainActivity.this,"credential invalid!",Toast.LENGTH_SHORT).show();
+
+                    }
+
+
                 }
 
             }
