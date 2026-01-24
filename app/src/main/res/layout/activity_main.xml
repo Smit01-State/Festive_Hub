@@ -22,7 +22,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_width="@dimen/_150sdp"
                 android:layout_height="@dimen/_150sdp"
-                android:src="@drawable/login" />
+                android:src="@drawable/login_logo" />
 
             <TextView
                 style="@style/text_20"
