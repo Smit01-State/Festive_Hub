@@ -61,9 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
                 if(Email.getText().toString().trim().equals("")){
                     Email.setError(" Email Required ");
-                } else if (!Email.getText().toString().trim().matches(emailPattern)) {
-                    Email.setError("valid Email Id required");
-                } else if (Password.getText().toString().trim().equals("")) {
+                } /*else if (!Email.getText().toString().trim().matches(emailPattern)) {
+                    Email.setError("valid Email Id required");}*/
+                else if (Password.getText().toString().trim().equals("")) {
                     Password.setError("password required");
                 } else if (Password.getText().toString().trim().length()<6){
                     Password.setError("valid Length(minimum 6) required");
