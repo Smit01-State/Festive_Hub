@@ -2,6 +2,7 @@ package com.Final_year_App.android;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import com.bumptech.glide.Glide;
 public class SplashActivity extends AppCompatActivity {
 
     ImageView splash_image;
+    SharedPreferences sp;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -32,6 +34,9 @@ public class SplashActivity extends AppCompatActivity {
 
         splash_image = findViewById(R.id.splash_Logo);
 
+        sp = getSharedPreferences(ConstantSP.PREF,MODE_PRIVATE);
+
+
         Glide.with(this)
                 .asGif()
                 .load("https://i.pinimg.com/originals/36/4a/bc/364abcf7466b3e725a4de1b3738940b3.gif")
@@ -41,9 +46,17 @@ public class SplashActivity extends AppCompatActivity {
         boolean handler = new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+
+                if(sp.getString(ConstantSP.USERID,"").equals("")){
+                    Intent intent = new Intent(SplashActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Intent intent = new Intent(SplashActivity.this, Dashboard.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         },3000);
 

@@ -1,6 +1,7 @@
 package com.Final_year_App.android;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     SQLiteDatabase db;
 
-
+    SharedPreferences sp;
 
 
     @Override
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        // constant
+        sp = getSharedPreferences(ConstantSP.PREF, MODE_PRIVATE);
 
 
         Email = findViewById(R.id.main_Email);
@@ -51,54 +54,75 @@ public class MainActivity extends AppCompatActivity {
         CreateAccount = findViewById(R.id.main_createAccount);
 
 
-        db = openOrCreateDatabase("finalApp",MODE_PRIVATE,null);
+        db = openOrCreateDatabase("finalApp", MODE_PRIVATE, null);
+        String createTable = "CREATE TABLE  IF NOT EXISTS FUSER(USERID INTEGER PRIMARY KEY AUTOINCREMENT ,NAME VARCHAR(50),EMAIL VARCHAR(20),CONTACTS BIGINT(10),PASSWORD VARCHAR(10),GENDER ENUM,CITY VARCHAR(10))";
+        db.execSQL(createTable);
 
 
         login.setOnClickListener(
-                new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                if(Email.getText().toString().trim().equals("")){
-                    Email.setError(" Email Required ");
-                } /*else if (!Email.getText().toString().trim().matches(emailPattern)) {
-                    Email.setError("valid Email Id required");}*/
-                else if (Password.getText().toString().trim().equals("")) {
-                    Password.setError("password required");
-                } else if (Password.getText().toString().trim().length()<6){
-                    Password.setError("valid Length(minimum 6) required");
-                }
-                else{
+                        if (Email.getText().toString().trim().equals("")) {
+                            Email.setError(" Email Required ");
+                        } /*else if (!Email.getText().toString().trim().matches(emailPattern)) {
+                    Email.setError("valid Email Id required");}*/ else if (Password.getText().toString().trim().equals("")) {
+                            Password.setError("password required");
+                        } else if (Password.getText().toString().trim().length() < 6) {
+                            Password.setError("valid Length(minimum 6) required");
+                        } else {
 
-                    String SelectQuery = "SELECT * FROM FUSER WHERE (EMAIL='"+Email.getText().toString()+"' or CONTACTS = '"+Email.getText().toString()+"' ) and PASSWORD = '"+Password.getText().toString()+"' ";
-                    Cursor cursor = db.rawQuery(SelectQuery,null);
+                            String SelectQuery = "SELECT * FROM FUSER WHERE (EMAIL='" + Email.getText().toString() + "' or CONTACTS = '" + Email.getText().toString() + "' ) and PASSWORD = '" + Password.getText().toString() + "' ";
+                            Cursor cursor = db.rawQuery(SelectQuery, null);
 
-                    if(cursor.getCount()>0){
+                            if (cursor.getCount() > 0) {
 
-                        System.out.println("login successfully");
+
+
+                       /* System.out.println("login successfully");
                         Log.d("login","successfully login");
                         Log.e("login","successfully login");
-                        Log.w("login","successfully login");
+                        Log.w("login","successfully login");*/
 
-                        Toast.makeText(MainActivity.this,"login successfully",Toast.LENGTH_SHORT).show();
+                                while (cursor.moveToNext()) {
 
-                        Intent intent = new Intent(MainActivity.this, Dashboard.class);
-                        startActivity(intent);
+                                    String sUserID = cursor.getString(0);
+                                    String sName = cursor.getString(1);
+                                    String sEmail = cursor.getString(2);
+                                    String sContacts = cursor.getString(3);
+                                    String sPassword = cursor.getString(4);
+                                    String sGender = cursor.getString(5);
+                                    String sCity = cursor.getString(6);
 
-                    }else{
+                                    sp.edit().putString(ConstantSP.USERID, sUserID).commit();
+                                    sp.edit().putString(ConstantSP.NAME, sName).commit();
+                                    sp.edit().putString(ConstantSP.EMAIL, sEmail).commit();
+                                    sp.edit().putString(ConstantSP.CONTACTS, sContacts).commit();
+                                    sp.edit().putString(ConstantSP.PASSWORD, sPassword).commit();
+                                    sp.edit().putString(ConstantSP.GENDER, sGender).commit();
+                                    sp.edit().putString(ConstantSP.CITY, sCity).commit();
 
-                        Toast.makeText(MainActivity.this,"credential invalid!",Toast.LENGTH_SHORT).show();
+                                }
+                                Toast.makeText(MainActivity.this, "login successfully", Toast.LENGTH_SHORT).show();
+
+                                Intent intent = new Intent(MainActivity.this, Dashboard.class);
+                                startActivity(intent);
+
+                            } else {
+
+                                Toast.makeText(MainActivity.this, "credential invalid!", Toast.LENGTH_SHORT).show();
+
+                            }
+
+
+                        }
 
                     }
-
-
-                }
-
-            }
-        });
+                });
 
         CreateAccount.setOnClickListener(
-                new View.OnClickListener(){
+                new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(MainActivity.this, CreateAccount.class);
