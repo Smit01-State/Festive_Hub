@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Final year App"
+rootProject.name = "Festive_Hub"
 include(":app")

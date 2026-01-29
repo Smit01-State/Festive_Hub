@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.Final_year_App.android"
+    namespace = "com.Festive_Hub.android"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.Final_year_App.android"
+        applicationId = "com.Festive_Hub.android"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
