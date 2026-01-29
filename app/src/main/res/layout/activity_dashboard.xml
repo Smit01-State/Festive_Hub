@@ -10,15 +10,31 @@
 
 
     <TextView
+        android:layout_marginTop="@dimen/_30sdp"
         android:id="@+id/Dashboard_title"
         style="@style/text_20"
         android:layout_gravity="center"
         android:textStyle="bold" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/backButton"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/Dashboard_profile"
         style="@style/button_14"
         android:layout_below="@+id/info"
-        android:text="Back" />
+        android:text="Profile" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/Dashboard_logOut"
+        style="@style/button_14"
+        android:layout_below="@+id/info"
+        android:text="log out" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/Dashboard_Delete"
+        style="@style/button_14"
+        android:layout_below="@+id/info"
+        android:text="Delete" />
 
 </LinearLayout>
