@@ -102,13 +102,34 @@
                     android:hint = "Password" />
 
             </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:visibility="gone"
+                android:id="@+id/Profile_Confirm_password_card"
+                android:layout_below="@+id/Profile_password_card"
+                android:elevation="@dimen/_3sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                app:cardCornerRadius="@dimen/_10sdp"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/Profile_Confirm_password"
+                    style="@style/edit_14"
+                    android:inputType="textPassword"
+                    android:hint = "confirm Password" />
+
+            </androidx.cardview.widget.CardView>
             <!--conform password-->
 
             <RadioGroup
                 android:id="@+id/Profile_radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/Profile_password_card"
+                android:layout_below="@+id/Profile_Confirm_password_card"
                 android:layout_marginHorizontal="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:orientation="horizontal">
@@ -159,8 +180,6 @@
                 android:layout_marginHorizontal="@dimen/_20sdp"
 
                 />
-
-
 
 
         </RelativeLayout>
