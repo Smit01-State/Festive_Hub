@@ -37,4 +37,12 @@
         android:layout_below="@+id/info"
         android:text="Delete" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/Dashboard_Category"
+        style="@style/button_14"
+        android:layout_below="@+id/info"
+        android:text="Category List" />
+
+
 </LinearLayout>

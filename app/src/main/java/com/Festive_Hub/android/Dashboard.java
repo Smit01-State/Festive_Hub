@@ -19,12 +19,14 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class Dashboard extends AppCompatActivity {
 
-    Button profile,log0ut,delete;
+    Button profile,log0ut,delete,Category;
 
     TextView title;
     SharedPreferences sp; // session
 
     SQLiteDatabase db;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class Dashboard extends AppCompatActivity {
         log0ut = findViewById(R.id.Dashboard_logOut);
         delete = findViewById(R.id.Dashboard_Delete);
         title = findViewById(R.id.Dashboard_title);
+        Category = findViewById(R.id.Dashboard_Category);
 
         sp = getSharedPreferences(ConstantSP.PREF, MODE_PRIVATE);
 
@@ -51,6 +54,14 @@ public class Dashboard extends AppCompatActivity {
 
 
         title.setText("Welcome, " + sp.getString(ConstantSP.NAME, ""));
+
+        Category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Dashboard.this, CategoryActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -119,7 +130,7 @@ public class Dashboard extends AppCompatActivity {
                         builder.setMessage("are you sure you want to Delete Account? ");
                         builder.setIcon(R.mipmap.app_icon);
 
-                        builder.setCancelable(false);
+                        builder.setCancelable(false);//
 
                         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             @Override
