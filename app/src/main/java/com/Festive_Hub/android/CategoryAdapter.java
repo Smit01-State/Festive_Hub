@@ -10,45 +10,45 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+
 public class CategoryAdapter extends BaseAdapter {
 
     Context context;
-    String[] nameArray;
-    String[] imageArray;
-    public CategoryAdapter(Context context, String[] nameArray, String[] imageArray) {
+    ArrayList<CategoryList> arrayList;
+    public CategoryAdapter(Context context, ArrayList<CategoryList> arrayList) {
 
     this.context = context;
-    this.nameArray = nameArray;
-    this.imageArray = imageArray;
+    this.arrayList = arrayList;
 
     }
 
     @Override
     public int getCount() {
-        return nameArray.length;
+        return arrayList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return nameArray[position];
+        return arrayList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        convertView = layoutInflater.inflate(R.layout.custom_category,null);
+        convertView =  layoutInflater.inflate(R.layout.custom_category,null);
 
         ImageView imageView = convertView.findViewById(R.id.custom_category_image);
         TextView name = convertView.findViewById(R.id.custom_category_name);
 
-        name.setText(nameArray[position]);
-        Glide.with(context).load(imageArray[position]).placeholder(R.mipmap.app_icon).into(imageView);
+        name.setText(arrayList.get(position).getName());
+        Glide.with(context).load(arrayList.get(position).getImage()).placeholder(R.mipmap.app_icon).into(imageView);
 
         return convertView;
     }

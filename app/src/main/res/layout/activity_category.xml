@@ -7,12 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".CategoryActivity">
 
-    <ListView
-        android:dividerHeight="@dimen/_1sdp"
-        android:divider="@color/blue"
+
+    <GridView
+        android:numColumns="3"
+        android:horizontalSpacing="@dimen/_10sdp"
+        android:verticalSpacing="@dimen/_10sdp"
         android:id="@+id/category_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

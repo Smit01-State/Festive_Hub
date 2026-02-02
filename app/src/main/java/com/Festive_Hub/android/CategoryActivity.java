@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -13,9 +14,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.ArrayList;
+
 public class CategoryActivity extends AppCompatActivity {
 
-    ListView listView;
+    GridView listView;
 
     String[] nameArray = {
             "Minutes",
@@ -42,6 +45,8 @@ public class CategoryActivity extends AppCompatActivity {
             "https://rukminim2.flixcart.com/fk-p-flap/64/64/image/e730a834ad950bae.png?q=100"
     };
 
+        ArrayList<CategoryList> arrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,15 +61,26 @@ public class CategoryActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.category_listview);
 
+        arrayList = new ArrayList<>();
+        for(int i = 0; i< nameArray.length;i++){
+           CategoryList list = new CategoryList();
+           list.setName(nameArray[i]);
+           list.setImage(imageArray[i]);
+
+           arrayList.add(list);
+
+        }
+
         // ArrayAdapter adapter = new ArrayAdapter(CategoryActivity.this, android.R.layout.simple_list_item_1,nameArray);
-       CategoryAdapter adapter = new CategoryAdapter(CategoryActivity.this,nameArray,imageArray);
+       CategoryAdapter adapter = new CategoryAdapter(CategoryActivity.this,arrayList);
         listView.setAdapter(adapter);
         
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(CategoryActivity.this, nameArray[position], Toast.LENGTH_SHORT).show();
+                Toast.makeText(CategoryActivity.this, arrayList.get(position).getName(), Toast.LENGTH_SHORT).show();
             }
+
         });
 
 
