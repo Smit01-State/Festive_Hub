@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity" >
 
 
     <TextView
@@ -43,6 +43,13 @@
         style="@style/button_14"
         android:layout_below="@+id/info"
         android:text="Category List" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/Dashboard_Recycler_view"
+        style="@style/button_14"
+        android:layout_below="@+id/info"
+        android:text="Recycler View" />
 
 
 </LinearLayout>

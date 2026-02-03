@@ -19,7 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class Dashboard extends AppCompatActivity {
 
-    Button profile,log0ut,delete,Category;
+    Button profile,log0ut,delete,Category,Recycler;
 
     TextView title;
     SharedPreferences sp; // session
@@ -44,6 +44,7 @@ public class Dashboard extends AppCompatActivity {
         delete = findViewById(R.id.Dashboard_Delete);
         title = findViewById(R.id.Dashboard_title);
         Category = findViewById(R.id.Dashboard_Category);
+        Recycler = findViewById(R.id.Dashboard_Recycler_view);
 
         sp = getSharedPreferences(ConstantSP.PREF, MODE_PRIVATE);
 
@@ -54,6 +55,14 @@ public class Dashboard extends AppCompatActivity {
 
 
         title.setText("Welcome, " + sp.getString(ConstantSP.NAME, ""));
+
+        Recycler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Dashboard.this,CategoryRecyclerActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Category.setOnClickListener(new View.OnClickListener() {
             @Override

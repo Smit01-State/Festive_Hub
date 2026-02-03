@@ -4,9 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -49,6 +51,22 @@ public class CategoryAdapter extends BaseAdapter {
 
         name.setText(arrayList.get(position).getName());
         Glide.with(context).load(arrayList.get(position).getImage()).placeholder(R.mipmap.app_icon).into(imageView);
+
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, arrayList.get(position).getName(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, arrayList.get(position).getImage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         return convertView;
     }
