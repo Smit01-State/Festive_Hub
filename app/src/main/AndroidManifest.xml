@@ -14,7 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Festive_Hub">
         <activity
+            android:name=".ProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".CategoryRecyclerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SubCategoryActivity"
             android:exported="false" />
         <activity
             android:name=".CategoryActivity"

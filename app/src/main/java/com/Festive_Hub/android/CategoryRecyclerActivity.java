@@ -1,5 +1,6 @@
 package com.Festive_Hub.android;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -18,6 +19,8 @@ public class CategoryRecyclerActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
 
+
+int[ ] idArray = {1,2,3,4,5,6,7,8,9};
     String[] nameArray = {
             "Minutes",
             "Mobiles & Tablets",
@@ -56,12 +59,15 @@ public class CategoryRecyclerActivity extends AppCompatActivity {
             return insets;
         });
 
+
+
         recyclerView = findViewById(R.id.Category_Recycler_view);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL));
 
         arrayList = new ArrayList<>();
         for(int i = 0; i< nameArray.length;i++){
             CategoryList list = new CategoryList();
+            list.setId(idArray[i]);
             list.setName(nameArray[i]);
             list.setImage(imageArray[i]);
 
