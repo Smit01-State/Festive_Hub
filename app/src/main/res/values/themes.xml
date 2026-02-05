@@ -40,6 +40,18 @@
         <item name="android:textColor">@color/gray</item>
         <item name="android:textSize">@dimen/_14sdp</item>
     </style>
+    <style name="text_13" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width"> wrap_content</item>
+        <item name="android:layout_height"> wrap_content</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">@dimen/_13sdp</item>
+    </style>
+    <style name="text_12" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width"> wrap_content</item>
+        <item name="android:layout_height"> wrap_content</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
+    </style>
     <style name="text_14_2" parent="Widget.AppCompat.TextView">
         <item name="android:layout_width"> wrap_content</item>
         <item name="android:layout_height"> wrap_content</item>
