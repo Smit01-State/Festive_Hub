@@ -3,24 +3,24 @@ package com.Festive_Hub.android;
 public class ProductCategoryList {
 
 
-    int productIDArray,SubcategoryIdArray;
+    int productID, SubcategoryId;
 
-    String vendorName,productNameArray,productPriceArray,productDiscountPriceArray,DiscountArray,imageArray;
+    String vendorName, productName, productPrice, productDiscountPrice, Discount, image;
 
-    public int getProductIDArray() {
-        return productIDArray;
+    public int getProductID() {
+        return productID;
     }
 
-    public void setProductIDArray(int productIDArray) {
-        this.productIDArray = productIDArray;
+    public void setProductID(int productID) {
+        this.productID = productID;
     }
 
-    public int getSubcategoryIdArray() {
-        return SubcategoryIdArray;
+    public int getSubcategoryId() {
+        return SubcategoryId;
     }
 
-    public void setSubcategoryIdArray(int subcategoryIdArray) {
-        SubcategoryIdArray = subcategoryIdArray;
+    public void setSubcategoryId(int subcategoryId) {
+        SubcategoryId = subcategoryId;
     }
 
     public String getVendorName() {
@@ -31,43 +31,43 @@ public class ProductCategoryList {
         this.vendorName = vendorName;
     }
 
-    public String getProductNameArray() {
-        return productNameArray;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProductNameArray(String productNameArray) {
-        this.productNameArray = productNameArray;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public String getProductPriceArray() {
-        return productPriceArray;
+    public String getProductPrice() {
+        return productPrice;
     }
 
-    public void setProductPriceArray(String productPriceArray) {
-        this.productPriceArray = productPriceArray;
+    public void setProductPrice(String productPrice) {
+        this.productPrice = productPrice;
     }
 
-    public String getProductDiscountPriceArray() {
-        return productDiscountPriceArray;
+    public String getProductDiscountPrice() {
+        return productDiscountPrice;
     }
 
-    public void setProductDiscountPriceArray(String productDiscountPriceArray) {
-        this.productDiscountPriceArray = productDiscountPriceArray;
+    public void setProductDiscountPrice(String productDiscountPrice) {
+        this.productDiscountPrice = productDiscountPrice;
     }
 
-    public String getDiscountArray() {
-        return DiscountArray;
+    public String getDiscount() {
+        return Discount;
     }
 
-    public void setDiscountArray(String discountArray) {
-        DiscountArray = discountArray;
+    public void setDiscount(String discount) {
+        Discount = discount;
     }
 
-    public String getImageArray() {
-        return imageArray;
+    public String getImage() {
+        return image;
     }
 
-    public void setImageArray(String imageArray) {
-        this.imageArray = imageArray;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

@@ -47,11 +47,12 @@ public class SubCategoryActivity extends AppCompatActivity {
         sp= getSharedPreferences(ConstantSP.PREF,MODE_PRIVATE);
 
         recyclerView = findViewById(R.id.SubCategory_Recycler_view);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
 
         arrayList = new ArrayList<>();
         for(int i = 0; i< nameArray.length;i++){
-            if(sp.getInt(ConstantSP.CATEGORYID,0)==categoryIDArray[i]) {
+            if(sp.getInt(ConstantSP.CATEGORYID,0)==categoryIDArray[i])
+            {
                 SubCategoryList list = new SubCategoryList();
                 list.setCategoryID(categoryIDArray[i]);
                 list.setSubCategoryID(subCategoryIDArray[i]);

@@ -2,6 +2,7 @@ package com.Festive_Hub.android;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +21,13 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     Context context;
 
     ArrayList<SubCategoryList> arrayList;
+    SharedPreferences sp;
     public SubCategoryAdapter(Context context, ArrayList<SubCategoryList> arrayList) {
         this.context =context;
         this.arrayList=arrayList;
+
+
+        this.sp = context.getSharedPreferences(ConstantSP.PREF,Context.MODE_PRIVATE);
 
     }
 
@@ -55,6 +60,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
             @Override
             public void onClick(View v) {
 
+                sp.edit().putInt(ConstantSP.SUBCATEGORYID, arrayList.get(position).getSubCategoryID()).commit();
                 Intent intent = new Intent(context, ProductActivity.class);
                 context.startActivity(intent);
             }

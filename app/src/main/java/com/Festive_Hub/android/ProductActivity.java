@@ -44,7 +44,7 @@ public class ProductActivity extends AppCompatActivity {
     };
 
 
-    RecyclerView recyclerView;
+    RecyclerView Productrecycler;
 
     SharedPreferences sp;
 
@@ -61,25 +61,26 @@ public class ProductActivity extends AppCompatActivity {
             return insets;
         });
 
-        recyclerView = findViewById(R.id.Product_Recycler);
+        Productrecycler = findViewById(R.id.Product_Recycler);
 
         sp = getSharedPreferences(ConstantSP.PREF,MODE_PRIVATE);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(ProductActivity.this));
+        Productrecycler.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
 
-
-        arrayList = new ArrayList<>();
-        for(int i = 0; i< productNameArray.length;i++){
+        arrayList = new ArrayList<ProductCategoryList>();
+        for(int i = 0; i< productNameArray.length; i++){
             if(sp.getInt(ConstantSP.SUBCATEGORYID,0)==SubcategoryIdArray[i]) {
+
                 ProductCategoryList list = new ProductCategoryList();
 
-                list.setSubcategoryIdArray(SubcategoryIdArray[i]);
-                list.setProductIDArray(productIDArray[i]);
-                list.setProductNameArray(productNameArray[i]);
-                list.setProductPriceArray(productPriceArray[i]);
-                list.setProductDiscountPriceArray(productDiscountPriceArray[i]);
-                list.setDiscountArray(DiscountArray[i]);
-                list.setImageArray(imageArray[i]);
+                list.setVendorName(vendorName[i]);
+                list.setSubcategoryId(SubcategoryIdArray[i]);
+                list.setProductID(productIDArray[i]);
+                list.setProductName(productNameArray[i]);
+                list.setProductPrice(productPriceArray[i]);
+                list.setProductDiscountPrice(productDiscountPriceArray[i]);
+                list.setDiscount(DiscountArray[i]);
+                list.setImage(imageArray[i]);
 
                 arrayList.add(list);
             }
@@ -88,7 +89,7 @@ public class ProductActivity extends AppCompatActivity {
 
         // ArrayAdapter adapter = new ArrayAdapter(CategoryActivity.this, android.R.layout.simple_list_item_1,nameArray);
         ProductCategoryAdapter adapter= new ProductCategoryAdapter(ProductActivity.this,arrayList);
-        recyclerView.setAdapter(adapter);
+        Productrecycler.setAdapter(adapter);
 
 
 
