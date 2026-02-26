@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -16,31 +15,40 @@ import java.util.ArrayList;
 
 public class ProductActivity extends AppCompatActivity {
 
-    int[] productIDArray = {1,2,3};
-    int[] SubcategoryIdArray = {1,1,2};
+    int[] productIDArray = {1,2,3,4,5,6};
+    int[] SubcategoryIdArray = {1,1,2,2,3,4};
     String[] vendorName = {
-            "GM TRENDS",
-            "TRIPR",
-            "MK BROTHERS"};
+            "Central Park, NYC",
+            "City Square, Ahmedabad",
+            "St. Peter's Cathedral",
+            "Community Hall, London",
+            "Beach Side, Goa",
+            "Palace Grounds, Bangalore"};
     String[] productNameArray = {
-            "Men Printed Round Neck Cotton Blend Blue T-Shirt",
-            "Men Solid Henley Neck Cotton Blend Black, Beige T-Shirt",
-            "Men Printed, Graphic Print Black Track Pants"
+            "Grand Diwali Mela 2024",
+            "Deepavali Fireworks Show",
+            "Christmas Eve Grand Mass",
+            "Santa's Winter Workshop",
+            "Holi Color Fest 2024",
+            "Navratri Garba Night"
     };
     String[] productPriceArray = {
-            "399","999","1499"
+            "Nov 12, 2024","Nov 13, 2024","Dec 24, 2024","Dec 25, 2024","Mar 25, 2024","Oct 03, 2024"
     };
     String[] productDiscountPriceArray = {
-            "241","215","205"
+            "06:00 PM","08:00 PM","10:00 PM","11:00 AM","10:00 AM","07:00 PM"
     };
     String[] DiscountArray = {
-            "39","78","86"
+            "Free","50","Free","20","30","40"
     };
 
     String[] imageArray = {
-            "https://rukminim2.flixcart.com/image/612/612/xif0q/t-shirt/p/s/r/m-6002-never-royal-blue-m-gm-trends-original-imahj6jgp3ywwwgh.jpeg?q=70",
-            "https://rukminim2.flixcart.com/image/612/612/xif0q/t-shirt/y/c/3/l-tblbghn-d213-tripr-original-imahj8x8nae4aazn.jpeg?q=70",
-            "https://rukminim2.flixcart.com/image/612/612/xif0q/track-pant/v/b/6/xl-spider-mk-brothers-original-imahj6xuj2ryrver.jpeg?q=70"
+            "https://img.freepik.com/free-vector/happy-diwali-festival-banner-with-realistic-diya-oil-lamp_1017-34085.jpg",
+            "https://img.freepik.com/free-vector/diwali-celebration-background-with-fireworks_1017-15632.jpg",
+            "https://img.freepik.com/free-vector/christmas-background-with-realistic-decoration_23-2148761273.jpg",
+            "https://img.freepik.com/free-vector/christmas-workshop-landing-page_23-2148780366.jpg",
+            "https://img.freepik.com/free-vector/colorful-holi-festival-background_23-2148842427.jpg",
+            "https://img.freepik.com/free-vector/navratri-festival-background-with-realistic-dandiya_1017-21175.jpg"
     };
 
 

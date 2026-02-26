@@ -19,15 +19,17 @@ public class SubCategoryActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     SharedPreferences sp;
-    int[] subCategoryIDArray = {1,2,3,4,5,6};
-    int[] categoryIDArray = {3,3,3,4,4,3};
+    int[] subCategoryIDArray = {1,2,3,4,5,6,7,8};
+    int[] categoryIDArray = {1,1,2,2,3,3,4,4};
     String[] nameArray = {
-            "Top Wear",
-            "Bottom Wear",
-            "Footwear",
-            "Gaming",
-            "Laptop",
-            "Kids"
+            "Diwali",
+            "Christmas",
+            "Holi",
+            "Navratri",
+            "Music Concert",
+            "Art Exhibition",
+            "Street Food",
+            "Dessert Fest"
     };
 
     ArrayList<SubCategoryList> arrayList;

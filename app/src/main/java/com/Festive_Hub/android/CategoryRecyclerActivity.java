@@ -2,6 +2,7 @@ package com.Festive_Hub.android;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Space;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,29 +21,18 @@ public class CategoryRecyclerActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
 
-int[ ] idArray = {1,2,3,4,5,6,7,8,9};
+    int[ ] idArray = {1,2,3,4};
     String[] nameArray = {
-            "Minutes",
-            "Mobiles & Tablets",
-            "Fashion",
-            "Electronics",
-            "TVs & Appliances",
-            "Home & Furniture",
-            "Flight Bookings",
-            "Beauty, Food..",
-            "Grocery"
+            "Religious Festivals",
+            "Cultural Festivals",
+            "Music & Arts",
+            "Food Festivals"
     };
     String[] imageArray = {
-
-            "https://rukminim2.flixcart.com/fk-p-flap/186/186/image/f03c562321e764bb.jpg?q=60",
-            "https://rukminim2.flixcart.com/fk-p-flap/186/186/image/d7eae409dc461a54.jpg?q=60",
-            "https://rukminim2.flixcart.com/fk-p-flap/64/64/image/ff559cb9d803d424.png?q=100",
-            "https://rukminim2.flixcart.com/fk-p-flap/64/64/image/af646c36d74c4be9.png?q=100",
-            "https://rukminim2.flixcart.com/fk-p-flap/64/64/image/e90944802d996756.jpg?q=100",
-            "https://rukminim2.flixcart.com/fk-p-flap/64/64/image/1788f177649e6991.png?q=100",
-            "https://rukminim2.flixcart.com/fk-p-flap/64/64/image/3c647c2e0d937dc5.png?q=100",
-            "https://rukminim2.flixcart.com/fk-p-flap/64/64/image/b3020c99672953b9.png?q=100",
-            "https://rukminim2.flixcart.com/fk-p-flap/64/64/image/e730a834ad950bae.png?q=100"
+            "https://img.freepik.com/free-vector/diwali-festival-background-with-diya-oil-lamp_1017-34084.jpg",
+            "https://img.freepik.com/free-vector/holi-festival-background-with-colorful-powder_23-2148842426.jpg",
+            "https://img.freepik.com/free-vector/music-event-poster-template-with-abstract-shapes_23-2148293060.jpg",
+            "https://img.freepik.com/free-vector/food-festival-poster-template_23-2148530460.jpg"
     };
 
     ArrayList<CategoryList> arrayList;
@@ -62,7 +52,7 @@ int[ ] idArray = {1,2,3,4,5,6,7,8,9};
 
 
         recyclerView = findViewById(R.id.Category_Recycler_view);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
 
         arrayList = new ArrayList<>();
         for(int i = 0; i< nameArray.length;i++){
