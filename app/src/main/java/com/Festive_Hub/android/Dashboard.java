@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class Dashboard extends AppCompatActivity {
 
-    ImageButton profileBtn;
+    ImageButton profileBtn, wishlistBtn, cartBtn;
     TextView title;
     RecyclerView categoryRecyclerView;
 
@@ -60,6 +60,8 @@ public class Dashboard extends AppCompatActivity {
 
         // Views
         profileBtn = findViewById(R.id.Dashboard_profile_btn);
+        wishlistBtn = findViewById(R.id.Dashboard_wishlist_btn);
+        cartBtn = findViewById(R.id.Dashboard_cart_btn);
         title = findViewById(R.id.Dashboard_title);
         categoryRecyclerView = findViewById(R.id.Dashboard_category_recycler);
 
@@ -116,6 +118,22 @@ public class Dashboard extends AppCompatActivity {
                     }
                 });
                 popupMenu.show();
+            }
+        });
+
+        // Wishlist button click
+        wishlistBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Dashboard.this, "Wishlist coming soon!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Cart button click
+        cartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Dashboard.this, "Cart coming soon!", Toast.LENGTH_SHORT).show();
             }
         });
     }
