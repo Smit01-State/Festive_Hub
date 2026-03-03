@@ -134,7 +134,8 @@ public class Dashboard extends AppCompatActivity {
         cartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Dashboard.this, "Cart coming soon!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Dashboard.this, CartActivity.class);
+                startActivity(intent);
             }
         });
     }
