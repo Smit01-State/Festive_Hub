@@ -125,7 +125,8 @@ public class Dashboard extends AppCompatActivity {
         wishlistBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Dashboard.this, "Wishlist coming soon!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Dashboard.this, WishlistActivity.class);
+                startActivity(intent);
             }
         });
 
