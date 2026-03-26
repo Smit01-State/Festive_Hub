@@ -17,6 +17,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.Festive_Hub.android.network.LoginApiClient;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
 
     Button login;
@@ -70,48 +75,38 @@ public class MainActivity extends AppCompatActivity {
                             Password.setError("valid Length(minimum 6) required");
                         } else {
 
-                            String SelectQuery = "SELECT * FROM FUSER WHERE (EMAIL='" + Email.getText().toString() + "' or CONTACTS = '" + Email.getText().toString() + "' ) and PASSWORD = '" + Password.getText().toString() + "' ";
-                            Cursor cursor = db.rawQuery(SelectQuery, null);
+                            // ── Get values from fields ────────────────
+                            String email    = Email.getText().toString().trim();
+                            String password = Password.getText().toString().trim();
 
-                            if (cursor.getCount() > 0) {
+                            // ── Call API instead of SQLite ────────────
+                            LoginApiClient loginApiClient = new LoginApiClient(MainActivity.this);
 
+                            loginApiClient.loginUser(email, password, new LoginApiClient.LoginCallback() {
 
+                                @Override
+                                public void onSuccess(JSONObject userData) throws JSONException {
 
-                       /* System.out.println("login successfully");
-                        Log.d("login","successfully login");
-                        Log.e("login","successfully login");
-                        Log.w("login","successfully login");*/
+                                    // ── Save to SharedPreferences ─────
+                                    // same sp.edit() you were doing before
+                                    sp.edit().putString(ConstantSP.EMAIL, email).apply();
+                                    sp.edit().putString(ConstantSP.PASSWORD, password).apply();
+                                    sp.edit().putString(ConstantSP.USERID, userData.getString("userid")).apply();
+                                    sp.edit().putString(ConstantSP.NAME, userData.getString("name")).apply();
 
-                                while (cursor.moveToNext()) {
+                                    Toast.makeText(MainActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
 
-                                    String sUserID = cursor.getString(0);
-                                    String sName = cursor.getString(1);
-                                    String sEmail = cursor.getString(2);
-                                    String sContacts = cursor.getString(3);
-                                    String sPassword = cursor.getString(4);
-                                    String sGender = cursor.getString(5);
-                                    String sCity = cursor.getString(6);
-
-                                    sp.edit().putString(ConstantSP.USERID, sUserID).commit();
-                                    sp.edit().putString(ConstantSP.NAME, sName).commit();
-                                    sp.edit().putString(ConstantSP.EMAIL, sEmail).commit();
-                                    sp.edit().putString(ConstantSP.CONTACTS, sContacts).commit();
-                                    sp.edit().putString(ConstantSP.PASSWORD, sPassword).commit();
-                                    sp.edit().putString(ConstantSP.GENDER, sGender).commit();
-                                    sp.edit().putString(ConstantSP.CITY, sCity).commit();
-
+                                    // ── Go to Dashboard ───────────────
+                                    Intent intent = new Intent(MainActivity.this, Dashboard.class);
+                                    startActivity(intent);
+                                    finish();
                                 }
-                                Toast.makeText(MainActivity.this, "login successfully", Toast.LENGTH_SHORT).show();
 
-                                Intent intent = new Intent(MainActivity.this, Dashboard.class);
-                                startActivity(intent);
-
-                            } else {
-
-                                Toast.makeText(MainActivity.this, "credential invalid!", Toast.LENGTH_SHORT).show();
-
-                            }
-
+                                @Override
+                                public void onError(String error) {
+                                    Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
                         }
 
