@@ -14,8 +14,10 @@ import com.bumptech.glide.Glide;
 
 public class EventDetailActivity extends AppCompatActivity {
 
-    ImageView mainImage, wishlistBtn, minusBtn, plusBtn;
+    ImageView mainImage, wishlistBtn, minusBtn, plusBtn, eventCartBtn;
     TextView vendorLabel, nameLabel, currentPriceLabel, originalPriceLabel, discountLabel, quantityLabel;
+    android.widget.LinearLayout qtyLayout;
+    android.widget.Button payNowBtn;
 
     SQLiteDatabase db;
     int eventID;
@@ -48,15 +50,29 @@ public class EventDetailActivity extends AppCompatActivity {
             if (currentQty > 1) {
                 currentQty--;
                 updateCartQty();
+            } else {
+                removeFromCart();
             }
+        });
+
+        // Cart Button Click
+        eventCartBtn.setOnClickListener(v -> {
+            currentQty = 1;
+            addToCart();
         });
 
         // Wishlist Toggle
         wishlistBtn.setOnClickListener(v -> toggleWishlist());
+
+        // Pay Now Click
+        payNowBtn.setOnClickListener(v -> {
+            Toast.makeText(EventDetailActivity.this, "Proceeding to Payment...", Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void initViews() {
         mainImage = findViewById(R.id.event_detail_image);
+        payNowBtn = findViewById(R.id.event_detail_pay_now_btn);
         wishlistBtn = findViewById(R.id.event_detail_wishlist);
         minusBtn = findViewById(R.id.event_detail_minus);
         plusBtn = findViewById(R.id.event_detail_plus);
@@ -66,6 +82,8 @@ public class EventDetailActivity extends AppCompatActivity {
         originalPriceLabel = findViewById(R.id.event_detail_original_price);
         discountLabel = findViewById(R.id.event_detail_discount);
         quantityLabel = findViewById(R.id.event_detail_quantity);
+        eventCartBtn = findViewById(R.id.event_detail_cart_btn);
+        qtyLayout = findViewById(R.id.event_detail_qty_layout);
 
         // Strikethrough for original price
         originalPriceLabel.setPaintFlags(originalPriceLabel.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -130,11 +148,32 @@ public class EventDetailActivity extends AppCompatActivity {
         Cursor cursor = db.rawQuery("SELECT QTY FROM CART WHERE EVENTID = " + eventID, null);
         if (cursor.moveToFirst()) {
             currentQty = cursor.getInt(0);
+            eventCartBtn.setVisibility(android.view.View.GONE);
+            qtyLayout.setVisibility(android.view.View.VISIBLE);
         } else {
             currentQty = 1;
+            eventCartBtn.setVisibility(android.view.View.VISIBLE);
+            qtyLayout.setVisibility(android.view.View.GONE);
         }
         quantityLabel.setText(String.valueOf(currentQty));
         cursor.close();
+    }
+
+    private void addToCart() {
+        db.execSQL("INSERT INTO CART(EVENTID, QTY) VALUES(" + eventID + ", " + currentQty + ")");
+        eventCartBtn.setVisibility(android.view.View.GONE);
+        qtyLayout.setVisibility(android.view.View.VISIBLE);
+        quantityLabel.setText(String.valueOf(currentQty));
+        Toast.makeText(this, "Added to Cart", Toast.LENGTH_SHORT).show();
+    }
+
+    private void removeFromCart() {
+        db.execSQL("DELETE FROM CART WHERE EVENTID = " + eventID);
+        eventCartBtn.setVisibility(android.view.View.VISIBLE);
+        qtyLayout.setVisibility(android.view.View.GONE);
+        currentQty = 1;
+        quantityLabel.setText(String.valueOf(currentQty));
+        Toast.makeText(this, "Removed from Cart", Toast.LENGTH_SHORT).show();
     }
 
     private void updateCartQty() {

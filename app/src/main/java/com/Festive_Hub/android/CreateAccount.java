@@ -23,14 +23,18 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 
+import com.Festive_Hub.android.network.ApiClient;
+
 import java.util.ArrayList;
 
 public class CreateAccount extends AppCompatActivity {
 
+
+
 Button Signup;
 
 TextView Login;
-EditText name , Email, Contact , Password, ConfirmPassword;
+EditText name , email, contact , password, ConfirmPassword;
 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 RadioGroup gender;
 CheckBox terms;
@@ -43,6 +47,7 @@ ArrayList<String> cityArray;
 String scity = "";
 
 SQLiteDatabase db;
+    ApiClient apiClient;
 
 
     @Override
@@ -56,10 +61,11 @@ SQLiteDatabase db;
             return insets;
         });
 
+
         name = findViewById(R.id.Create_name);
-        Email = findViewById(R.id.Create_Email);
-        Contact = findViewById(R.id.Create_contact);
-        Password = findViewById(R.id.Create_password);
+        email = findViewById(R.id.Create_Email);
+        contact = findViewById(R.id.Create_contact);
+        password = findViewById(R.id.Create_password);
         ConfirmPassword = findViewById(R.id.Create_Confirm_password);
         Signup = findViewById(R.id.Create_button);
         Login = findViewById(R.id.Create_login);
@@ -74,7 +80,7 @@ SQLiteDatabase db;
         cityArray.add("rajkot");
         cityArray.add(0,"Select City");
 
-
+        apiClient = new ApiClient(this);
         db = openOrCreateDatabase("finalApp",MODE_PRIVATE,null);
         String createTable = "CREATE TABLE  IF NOT EXISTS FUSER(USERID INTEGER PRIMARY KEY AUTOINCREMENT ,NAME VARCHAR(50),EMAIL VARCHAR(20),CONTACTS BIGINT(10),PASSWORD VARCHAR(10),GENDER ENUM,CITY VARCHAR(10))";
         db.execSQL(createTable);
@@ -119,25 +125,32 @@ SQLiteDatabase db;
         Signup.setOnClickListener(
                 new View.OnClickListener(){
 
+
                     @Override
                     public void onClick(View v) {
+                        String Name = name.getText().toString().trim();
+                        String Email = email.getText().toString().trim();
+                        String Contact = contact.getText().toString().trim();
+                        String Password = password.getText().toString().trim();
 
-                        if(name.getText().toString().trim().equals("")){
+
+
+                        if(Name.equals("")){
                             name.setError("Enter your name");}
-                        else if(Email.getText().toString().trim().equals("")){
-                                Email.setError(" Email Required ");
+                        else if(Email.equals("")){
+                                email.setError(" Email Required ");
                         }
-                        else if (!Email.getText().toString().trim().matches(emailPattern)) {
-                                Email.setError("valid Email Id required");
+                        else if (!Email.matches(emailPattern)) {
+                                email.setError("valid Email Id required");
                         }
-                        else if (Contact.getText().toString().trim().length()<10) {
-                            Contact.setError("valid contact number required");
+                        else if (Contact.length()<10) {
+                            contact.setError("valid contact number required");
                             
-                        } else if (Password.getText().toString().trim().equals("")) {
-                            Password.setError("password required");
+                        } else if (Password.equals("")) {
+                            password.setError("password required");
                         }
-                        else if (Password.getText().toString().trim().length()<6) {
-                            Password.setError("valid Length(minimum 6) required");
+                        else if (Password.length()<6) {
+                            password.setError("valid Length(minimum 6) required");
                         }
                         else if (ConfirmPassword.getText().toString().trim().equals("")) {
                         ConfirmPassword.setError("password required");
@@ -145,7 +158,7 @@ SQLiteDatabase db;
                         else if (ConfirmPassword.getText().toString().trim().length()<6) {
                         ConfirmPassword.setError("valid Length(minimum 6) required");
                         }
-                        else if (!ConfirmPassword.getText().toString().matches(Password.getText().toString().trim())) {
+                        else if (!ConfirmPassword.getText().toString().matches(Password)) {
                             ConfirmPassword.setError("password not match");
                         }
                         else if(gender.getCheckedRadioButtonId() == -1){
@@ -159,7 +172,7 @@ SQLiteDatabase db;
                         }
                         else{
 
-                            String InsertQuery = "INSERT INTO FUSER (NAME,EMAIL,CONTACTS,PASSWORD,GENDER,CITY) values('"+name.getText().toString()+"','"+Email.getText().toString()+"','"+Contact.getText().toString()+"','"+Password.getText().toString()+"','"+sgender+"','"+scity+"')";
+                            String InsertQuery = "INSERT INTO FUSER (NAME,EMAIL,CONTACTS,PASSWORD,GENDER,CITY) values('"+Name+"','"+Email+"','"+Contact+"','"+Password +"','"+sgender+"','"+scity+"')";
                             db.execSQL(InsertQuery);
 
                             System.out.println("signup successfully");
@@ -167,6 +180,9 @@ SQLiteDatabase db;
 
                             Intent intent = new Intent(CreateAccount.this, MainActivity.class);
                             startActivity(intent);
+
+                            apiClient.registerUser(Name,Email,Contact,Password,sgender,scity,callback);
+
 
                             onBackPressed();
                         }
@@ -188,4 +204,16 @@ SQLiteDatabase db;
 
 
     }
+
+   ApiClient.ApiCallback callback = new ApiClient.ApiCallback() {
+        @Override
+        public void onSuccess(String message) {
+            Toast.makeText(CreateAccount.this, message, Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onError(String error) {
+            Toast.makeText(CreateAccount.this, error, Toast.LENGTH_SHORT).show();
+        }
+    };
 }

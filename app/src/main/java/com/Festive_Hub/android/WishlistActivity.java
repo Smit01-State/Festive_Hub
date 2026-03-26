@@ -32,25 +32,32 @@ public class WishlistActivity extends AppCompatActivity {
         arrayList = new ArrayList<>();
         db = openOrCreateDatabase("finalApp", MODE_PRIVATE, null);
 
-        // Fetching events that are in the Wishlist table
-        String query = "SELECT EVENT_LIST.ID, VENDOR, NAME, PRICE, DISC_PRICE, DISCOUNT, IMAGE " +
-                "FROM EVENT_LIST " +
-                "INNER JOIN WISHLIST ON EVENT_LIST.ID = WISHLIST.EVENTID";
+        // Step 1: Fetch all items from the Wishlist table
+        String wishlistQuery = "SELECT EVENTID FROM WISHLIST";
+        Cursor wishlistCursor = db.rawQuery(wishlistQuery, null);
 
-        Cursor cursor = db.rawQuery(query, null);
+        while (wishlistCursor.moveToNext()) {
+            int eventID = wishlistCursor.getInt(0);
 
-        while (cursor.moveToNext()) {
-            WishlistList wish = new WishlistList();
-            wish.setEventID(cursor.getInt(0));
-            wish.setVendorName(cursor.getString(1));
-            wish.setEventName(cursor.getString(2));
-            wish.setEventPrice(cursor.getString(3));
-            wish.setEventDiscountPrice(cursor.getString(4));
-            wish.setDiscount(cursor.getString(5));
-            wish.setImage(cursor.getString(6));
-            arrayList.add(wish);
+            // Step 2: For each item in the wishlist, fetch its details from EVENT_LIST
+            String eventQuery = "SELECT ID, VENDOR, NAME, PRICE, DISC_PRICE, DISCOUNT, IMAGE FROM EVENT_LIST WHERE ID = "
+                    + eventID;
+            Cursor eventCursor = db.rawQuery(eventQuery, null);
+
+            if (eventCursor.moveToFirst()) {
+                WishlistList wish = new WishlistList();
+                wish.setEventID(eventCursor.getInt(0));
+                wish.setVendorName(eventCursor.getString(1));
+                wish.setEventName(eventCursor.getString(2));
+                wish.setEventPrice(eventCursor.getString(3));
+                wish.setEventDiscountPrice(eventCursor.getString(4));
+                wish.setDiscount(eventCursor.getString(5));
+                wish.setImage(eventCursor.getString(6));
+                arrayList.add(wish);
+            }
+            eventCursor.close();
         }
-        cursor.close();
+        wishlistCursor.close();
 
         adapter = new WishAdapter(WishlistActivity.this, arrayList);
         recyclerView.setAdapter(adapter);
