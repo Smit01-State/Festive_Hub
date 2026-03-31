@@ -48,6 +48,13 @@ public class Dashboard extends AppCompatActivity {
     };
 
     @Override
+    protected void onResume() { // for every edit or update profile it update title from Edited new name
+        super.onResume();
+        // Set welcome title
+        title.setText("Welcome, " + sp.getString(ConstantSP.NAME, ""));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -75,8 +82,8 @@ public class Dashboard extends AppCompatActivity {
                 "GENDER ENUM, CITY VARCHAR(10))";
         db.execSQL(createTable);
 
-        // Set welcome title
-        title.setText("Welcome, " + sp.getString(ConstantSP.NAME, ""));
+
+
 
         // Setup RecyclerView with event categories
         ArrayList<CategoryList> categoryList = new ArrayList<>();
@@ -109,6 +116,7 @@ public class Dashboard extends AppCompatActivity {
                             // Navigate to ProfileActivity
                             Intent intent = new Intent(Dashboard.this, ProfileActivity.class);
                             startActivity(intent);
+                            finish();
                         } else if (id == 2) {
                             showLogoutDialog();
                         } else if (id == 3) {
@@ -178,6 +186,7 @@ public class Dashboard extends AppCompatActivity {
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
                 String deleteQuery = "DELETE FROM FUSER WHERE USERID = '" +
                         sp.getString(ConstantSP.USERID, "") + "'";
                 db.execSQL(deleteQuery);

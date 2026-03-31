@@ -32,7 +32,6 @@ public class CreateAccount extends AppCompatActivity {
 
 
 Button Signup;
-
 TextView Login;
 EditText name , email, contact , password, ConfirmPassword;
 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";

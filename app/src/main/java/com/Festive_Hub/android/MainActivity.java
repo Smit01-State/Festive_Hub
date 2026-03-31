@@ -89,10 +89,15 @@ public class MainActivity extends AppCompatActivity {
 
                                     // ── Save to SharedPreferences ─────
                                     // same sp.edit() you were doing before
-                                    sp.edit().putString(ConstantSP.EMAIL, email).apply();
-                                    sp.edit().putString(ConstantSP.PASSWORD, password).apply();
+
+
                                     sp.edit().putString(ConstantSP.USERID, userData.getString("userid")).apply();
                                     sp.edit().putString(ConstantSP.NAME, userData.getString("name")).apply();
+                                    sp.edit().putString(ConstantSP.EMAIL, userData.getString("email")).apply();
+                                    sp.edit().putString(ConstantSP.CONTACTS, userData.getString("contact")).apply();
+                                    sp.edit().putString(ConstantSP.PASSWORD, userData.getString("password")).apply();
+                                    sp.edit().putString(ConstantSP.GENDER, userData.getString("gender")).apply();
+                                    sp.edit().putString(ConstantSP.CITY, userData.getString("city")).apply();
 
                                     Toast.makeText(MainActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
 
