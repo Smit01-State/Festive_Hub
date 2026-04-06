@@ -56,11 +56,6 @@ public class MainActivity extends AppCompatActivity {
         CreateAccount = findViewById(R.id.main_createAccount);
 
 
-        db = openOrCreateDatabase("finalApp", MODE_PRIVATE, null);
-        String createTable = "CREATE TABLE  IF NOT EXISTS FUSER(USERID INTEGER PRIMARY KEY AUTOINCREMENT ,NAME VARCHAR(50),EMAIL VARCHAR(20),CONTACTS BIGINT(10),PASSWORD VARCHAR(10),GENDER ENUM,CITY VARCHAR(10))";
-        db.execSQL(createTable);
-
-
         login.setOnClickListener(
                 new View.OnClickListener() {
                     @Override

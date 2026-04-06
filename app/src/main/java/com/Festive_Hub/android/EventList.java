@@ -4,7 +4,7 @@ public class EventList {
 
     int eventID, SubcategoryId;
 
-    String vendorName, eventName, eventPrice, eventDiscountPrice, Discount, image;
+    String vendorName, eventName, eventPrice, eventDiscountPrice, Discount, image, eventDate, eventTime, location;
 
     public int getEventID() {
         return eventID;
@@ -68,5 +68,29 @@ public class EventList {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(String eventDate) {
+        this.eventDate = eventDate;
+    }
+
+    public String getEventTime() {
+        return eventTime;
+    }
+
+    public void setEventTime(String eventTime) {
+        this.eventTime = eventTime;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

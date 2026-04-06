@@ -49,6 +49,24 @@
                 android:textSize="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_4sdp" />
 
+            <TextView
+                android:id="@+id/event_detail_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time: 10:00 AM"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginTop="@dimen/_4sdp" />
+
+            <TextView
+                android:id="@+id/event_detail_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location: Event Venue"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginTop="@dimen/_2sdp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

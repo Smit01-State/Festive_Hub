@@ -105,8 +105,9 @@ public class Dashboard extends AppCompatActivity {
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(Dashboard.this, profileBtn);
                 popupMenu.getMenu().add(0, 1, 0, "Profile Edit");
-                popupMenu.getMenu().add(0, 2, 1, "Logout");
-                popupMenu.getMenu().add(0, 3, 2, "Delete Account");
+                popupMenu.getMenu().add(0, 4, 1, "Event Manager");
+                popupMenu.getMenu().add(0, 2, 2, "Logout");
+                popupMenu.getMenu().add(0, 3, 3, "Delete Account");
 
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
@@ -121,6 +122,9 @@ public class Dashboard extends AppCompatActivity {
                             showLogoutDialog();
                         } else if (id == 3) {
                             showDeleteDialog();
+                        } else if (id == 4) {
+                            Intent intent = new Intent(Dashboard.this, EventManagerActivity.class);
+                            startActivity(intent);
                         }
                         return true;
                     }
