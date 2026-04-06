@@ -51,7 +51,7 @@ public class EventManagerActivity extends AppCompatActivity {
                         JSONObject obj = events.getJSONObject(i);
                         EventList event = new EventList();
                         event.setEventID(obj.getInt("id"));
-                        event.setSubcategoryId(obj.getInt("scid"));
+                        event.setCategoryId(obj.getInt("cid"));
                         event.setVendorName(obj.getString("vendor"));
                         event.setEventName(obj.getString("name"));
                         event.setEventPrice(obj.getString("price"));

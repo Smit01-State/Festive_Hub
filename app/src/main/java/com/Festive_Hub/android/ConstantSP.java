@@ -15,7 +15,6 @@ public class ConstantSP {
 
     public static String CATEGORYID = "category_id";
 
-    public static final String SUBCATEGORYID = "sub_category_id";
 
     public static final String PRODUCTID = "product_id";
     public static final String PRODUCTVENDORNAME = "product_vendor_name";

@@ -2,7 +2,7 @@ package com.Festive_Hub.android;
 
 public class EventList {
 
-    int eventID, SubcategoryId;
+    int eventID, categoryId;
 
     String vendorName, eventName, eventPrice, eventDiscountPrice, Discount, image, eventDate, eventTime, location;
 
@@ -14,12 +14,12 @@ public class EventList {
         this.eventID = eventID;
     }
 
-    public int getSubcategoryId() {
-        return SubcategoryId;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setSubcategoryId(int subcategoryId) {
-        SubcategoryId = subcategoryId;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getVendorName() {

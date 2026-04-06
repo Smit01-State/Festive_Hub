@@ -66,7 +66,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
 
                 SP.edit().putInt(ConstantSP.CATEGORYID,arrayList.get(position).getId()).commit();
 
-                Intent intent = new Intent(context, SubCategoryActivity.class);
+                Intent intent = new Intent(context, EventActivity.class);
                 context.startActivity(intent);
             }
         });

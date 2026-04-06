@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class UpdateEventClient {
 
-    private static final String URL = "https://yourserver.com/api/update.php"; // 🔁 change this
+    private static final String URL = "http://10.0.2.2/FinalGpgApp/Events/Update.php"; // 🔁 change this
 
     public interface Callback {
         void onSuccess(String message);
@@ -25,7 +25,7 @@ public class UpdateEventClient {
     public static void execute(
             Context context,
             int id,
-            int scid,
+            int cid,
             String vendor,
             String name,
             String price,
@@ -58,7 +58,7 @@ public class UpdateEventClient {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("id",         String.valueOf(id));
-                params.put("scid",       String.valueOf(scid));
+                params.put("cid",       String.valueOf(cid));
                 params.put("vendor",     vendor);
                 params.put("name",       name);
                 params.put("price",      price);

@@ -43,7 +43,7 @@ public class EventManagerAdapter extends RecyclerView.Adapter<EventManagerAdapte
             Intent intent = new Intent(context, EventAddEditActivity.class);
             intent.putExtra("isEdit", true);
             intent.putExtra("id", event.getEventID());
-            intent.putExtra("scid", event.getSubcategoryId());
+            intent.putExtra("cid", event.getCategoryId());
             intent.putExtra("vendor", event.getVendorName());
             intent.putExtra("name", event.getEventName());
             intent.putExtra("price", event.getEventPrice());

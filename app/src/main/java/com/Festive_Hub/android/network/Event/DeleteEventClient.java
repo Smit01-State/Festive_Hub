@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class DeleteEventClient {
 
-    private static final String URL = "https://yourserver.com/api/delete.php"; // 🔁 change this
+    private static final String URL = "http://10.0.2.2/FinalGpgApp/Events/Delete.php"; // 🔁 change this
 
     public interface Callback {
         void onSuccess(String message);

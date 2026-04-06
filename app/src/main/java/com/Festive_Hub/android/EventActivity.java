@@ -25,7 +25,7 @@ public class EventActivity extends AppCompatActivity {
 
     // Initial static data to populate DB if empty
     int[] eventIDArray = { 1, 2, 3, 4, 5, 6 };
-    int[] scIdArray = { 1, 1, 2, 2, 3, 4 };
+    int[] cIdArray = { 1, 1, 2, 2, 3, 4 };
     String[] vendorName = { "Central Park, NYC", "City Square, Ahmedabad", "St. Peter's Cathedral",
             "Community Hall, London", "Beach Side, Goa", "Palace Grounds, Bangalore" };
     String[] eventNameArray = { "Grand Diwali Mela 2024", "Deepavali Fireworks Show", "Christmas Eve Grand Mass",
@@ -58,7 +58,7 @@ public class EventActivity extends AppCompatActivity {
         // DB Setup
         db = openOrCreateDatabase("finalApp", MODE_PRIVATE, null);
         db.execSQL(
-                "CREATE TABLE IF NOT EXISTS EVENT_LIST(ID INTEGER PRIMARY KEY, SCID INTEGER, VENDOR TEXT, NAME TEXT, PRICE TEXT, DISC_PRICE TEXT, DISCOUNT TEXT, IMAGE TEXT)");
+                "CREATE TABLE IF NOT EXISTS EVENT_LIST(ID INTEGER PRIMARY KEY, CID INTEGER, VENDOR TEXT, NAME TEXT, PRICE TEXT, DISC_PRICE TEXT, DISCOUNT TEXT, IMAGE TEXT)");
 
         // Populating initial data if empty
         Cursor checkCursor = db.rawQuery("SELECT * FROM EVENT_LIST", null);
@@ -66,7 +66,7 @@ public class EventActivity extends AppCompatActivity {
             for (int i = 0; i < eventNameArray.length; i++) {
                 ContentValues values = new ContentValues();
                 values.put("ID", eventIDArray[i]);
-                values.put("SCID", scIdArray[i]);
+                values.put("CID", cIdArray[i]);
                 values.put("VENDOR", vendorName[i]);
                 values.put("NAME", eventNameArray[i]);
                 values.put("PRICE", eventPriceArray[i]);
@@ -80,13 +80,13 @@ public class EventActivity extends AppCompatActivity {
 
         // Load data from DB into ArrayList
         arrayList = new ArrayList<>();
-        int selectedSCID = sp.getInt(ConstantSP.SUBCATEGORYID, 0);
-        Cursor cursor = db.rawQuery("SELECT * FROM EVENT_LIST WHERE SCID = " + selectedSCID, null);
+        int selectedCID = sp.getInt(ConstantSP.CATEGORYID, 0);
+        Cursor cursor = db.rawQuery("SELECT * FROM EVENT_LIST WHERE CID = " + selectedCID, null);
 
         while (cursor.moveToNext()) {
             EventList list = new EventList();
             list.setEventID(cursor.getInt(0));
-            list.setSubcategoryId(cursor.getInt(1));
+            list.setCategoryId(cursor.getInt(1));
             list.setVendorName(cursor.getString(2));
             list.setEventName(cursor.getString(3));
             list.setEventPrice(cursor.getString(4));

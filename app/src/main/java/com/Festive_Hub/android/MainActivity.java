@@ -74,6 +74,14 @@ public class MainActivity extends AppCompatActivity {
                             String email    = Email.getText().toString().trim();
                             String password = Password.getText().toString().trim();
 
+                            if (email.equals("admin@gmail.com") && password.equals("123abc")) {
+                                Toast.makeText(MainActivity.this, "Admin Login Successfully", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(MainActivity.this, EventManagerActivity.class);
+                                startActivity(intent);
+                                finish();
+                                return;
+                            }
+
                             // ── Call API instead of SQLite ────────────
                             LoginApiClient loginApiClient = new LoginApiClient(MainActivity.this);
 

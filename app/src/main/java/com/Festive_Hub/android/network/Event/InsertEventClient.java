@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class InsertEventClient {
 
-    private static final String URL = "https://yourserver.com/api/insert.php"; // 🔁 change this
+    private static final String URL = "http://10.0.2.2/FinalGpgApp/Events/Insert.php"; // 🔁 change this
 
     public interface Callback {
         void onSuccess(String message);
@@ -23,7 +23,7 @@ public class InsertEventClient {
 
     public static void execute(
             Context context,
-            int scid,
+            int cid,
             String vendor,
             String name,
             String price,
@@ -54,7 +54,7 @@ public class InsertEventClient {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("scid",       String.valueOf(scid));
+                params.put("cid",       String.valueOf(cid));
                 params.put("vendor",     vendor);
                 params.put("name",       name);
                 params.put("price",      price);

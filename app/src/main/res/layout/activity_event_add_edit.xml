@@ -37,13 +37,20 @@
             android:inputType="text"
             android:layout_marginTop="12dp" />
 
-        <EditText
-            android:id="@+id/et_scid"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="SubCategory ID (e.g. 1)"
-            android:inputType="number"
-            android:layout_marginTop="12dp" />
+            android:text="Select Event Category"
+            android:textColor="@color/gray"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="4dp" />
+
+        <Spinner
+            android:id="@+id/spinner_category"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:drawable/btn_dropdown"
+            android:layout_marginTop="4dp" />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -13,7 +13,7 @@ import org.json.JSONObject;
 
 public class SelectEventClient {
 
-    private static final String URL = "https://yourserver.com/api/select.php"; // 🔁 change this
+    private static final String URL = "http://10.0.2.2/FinalGpgApp/Events/View.php"; // 🔁 change this
 
     public interface Callback {
         void onFetched(JSONArray events);
@@ -25,9 +25,9 @@ public class SelectEventClient {
         execute(context, null, callback);
     }
 
-    // Fetch events filtered by SCID
-    public static void execute(Context context, Integer scid, Callback callback) {
-        String finalUrl = (scid != null) ? URL + "?scid=" + scid : URL;
+    // Fetch events filtered by CID
+    public static void execute(Context context, Integer cid, Callback callback) {
+        String finalUrl = (cid != null) ? URL + "?cid=" + cid : URL;
 
         RequestQueue queue = AppController.getInstance(context.getApplicationContext()).getRequestQueue();
 

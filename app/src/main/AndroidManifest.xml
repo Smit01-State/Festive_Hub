@@ -29,9 +29,7 @@
         <activity
             android:name=".CategoryRecyclerActivity"
             android:exported="false" />
-        <activity
-            android:name=".SubCategoryActivity"
-            android:exported="false" />
+
         <activity
             android:name=".CategoryActivity"
             android:exported="false" />

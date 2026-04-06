@@ -1,8 +1,10 @@
 package com.Festive_Hub.android;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +13,10 @@ import com.Festive_Hub.android.network.Event.UpdateEventClient;
 
 public class EventAddEditActivity extends AppCompatActivity {
 
-    EditText etName, etVendor, etScid, etPrice, etDiscPrice, etDiscount, etImage, etDate, etTime, etLocation;
+    EditText etName, etVendor, etPrice, etDiscPrice, etDiscount, etImage, etDate, etTime, etLocation;
+    Spinner spinnerCategory;
+    int[] categoryIds = {1, 2, 3, 4, 5, 6};
+    String[] categoryNames = {"Religious Festivals", "Cultural Festivals", "Music & Arts", "Food Festivals", "Tech Expos", "Sports Events"};
     Button btnSave;
     TextView title;
     
@@ -26,7 +31,9 @@ public class EventAddEditActivity extends AppCompatActivity {
         title = findViewById(R.id.title_add_edit_event);
         etName = findViewById(R.id.et_event_name);
         etVendor = findViewById(R.id.et_vendor_name);
-        etScid = findViewById(R.id.et_scid);
+        spinnerCategory = findViewById(R.id.spinner_category);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categoryNames);
+        spinnerCategory.setAdapter(spinnerAdapter);
         etPrice = findViewById(R.id.et_event_price);
         etDiscPrice = findViewById(R.id.et_event_disc_price);
         etDiscount = findViewById(R.id.et_event_discount);
@@ -42,7 +49,13 @@ public class EventAddEditActivity extends AppCompatActivity {
             eventId = getIntent().getIntExtra("id", -1);
             etName.setText(getIntent().getStringExtra("name"));
             etVendor.setText(getIntent().getStringExtra("vendor"));
-            etScid.setText(String.valueOf(getIntent().getIntExtra("scid", 0)));
+            int existingCid = getIntent().getIntExtra("cid", 1);
+            for (int i = 0; i < categoryIds.length; i++) {
+                if (categoryIds[i] == existingCid) {
+                    spinnerCategory.setSelection(i);
+                    break;
+                }
+            }
             etPrice.setText(getIntent().getStringExtra("price"));
             etDiscPrice.setText(getIntent().getStringExtra("disc_price"));
             etDiscount.setText(getIntent().getStringExtra("discount"));
@@ -58,7 +71,8 @@ public class EventAddEditActivity extends AppCompatActivity {
     private void saveEvent() {
         String name = etName.getText().toString().trim();
         String vendor = etVendor.getText().toString().trim();
-        String scidStr = etScid.getText().toString().trim();
+        int selectedPosition = spinnerCategory.getSelectedItemPosition();
+        int cid = categoryIds[selectedPosition];
         String price = etPrice.getText().toString().trim();
         String discPrice = etDiscPrice.getText().toString().trim();
         String discount = etDiscount.getText().toString().trim();
@@ -67,15 +81,13 @@ public class EventAddEditActivity extends AppCompatActivity {
         String time = etTime.getText().toString().trim();
         String location = etLocation.getText().toString().trim();
 
-        if (name.isEmpty() || vendor.isEmpty() || scidStr.isEmpty() || price.isEmpty()) {
+        if (name.isEmpty() || vendor.isEmpty() || price.isEmpty()) {
             Toast.makeText(this, "Please fill in required fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        int scid = Integer.parseInt(scidStr);
-
         if (isEdit) {
-            UpdateEventClient.execute(this, eventId, scid, vendor, name, price, discPrice, discount, image, date, time, location, new UpdateEventClient.Callback() {
+            UpdateEventClient.execute(this, eventId, cid, vendor, name, price, discPrice, discount, image, date, time, location, new UpdateEventClient.Callback() {
                 @Override
                 public void onSuccess(String message) {
                     Toast.makeText(EventAddEditActivity.this, "Event Updated!", Toast.LENGTH_SHORT).show();
@@ -88,7 +100,7 @@ public class EventAddEditActivity extends AppCompatActivity {
                 }
             });
         } else {
-            InsertEventClient.execute(this, scid, vendor, name, price, discPrice, discount, image, date, time, location, new InsertEventClient.Callback() {
+            InsertEventClient.execute(this, cid, vendor, name, price, discPrice, discount, image, date, time, location, new InsertEventClient.Callback() {
                 @Override
                 public void onSuccess(String message) {
                     Toast.makeText(EventAddEditActivity.this, "Event Added!", Toast.LENGTH_SHORT).show();

@@ -33,18 +33,22 @@ public class Dashboard extends AppCompatActivity {
     SQLiteDatabase db;
 
     // Category data
-    int[] idArray = { 1, 2, 3, 4 };
+    int[] idArray = { 1, 2, 3, 4, 5, 6 };
     String[] nameArray = {
             "Religious Festivals",
             "Cultural Festivals",
             "Music & Arts",
-            "Food Festivals"
+            "Food Festivals",
+            "Tech Expos",
+            "Sports Events"
     };
     String[] imageArray = {
             "https://img.freepik.com/free-vector/diwali-festival-background-with-diya-oil-lamp_1017-34084.jpg",
             "https://img.freepik.com/free-vector/holi-festival-background-with-colorful-powder_23-2148842426.jpg",
             "https://img.freepik.com/free-vector/music-event-poster-template-with-abstract-shapes_23-2148293060.jpg",
-            "https://img.freepik.com/free-vector/food-festival-poster-template_23-2148530460.jpg"
+            "https://img.freepik.com/free-vector/food-festival-poster-template_23-2148530460.jpg",
+            "https://img.freepik.com/free-vector/technology-background-with-hexagonal-shapes_23-2148386801.jpg",
+            "https://img.freepik.com/free-vector/abstract-sport-texture-background-design_23-2148858882.jpg"
     };
 
     @Override
