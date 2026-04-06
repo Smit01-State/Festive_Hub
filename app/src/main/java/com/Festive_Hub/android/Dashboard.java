@@ -1,5 +1,7 @@
 package com.Festive_Hub.android;
 
+import static com.Festive_Hub.android.network.DeleteApiClient.*;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +22,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
+import com.Festive_Hub.android.network.DeleteApiClient;
 
 import java.util.ArrayList;
 
@@ -195,9 +199,25 @@ public class Dashboard extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                String deleteQuery = "DELETE FROM FUSER WHERE USERID = '" +
+                /*String deleteQuery = "DELETE FROM FUSER WHERE USERID = '" +
                         sp.getString(ConstantSP.USERID, "") + "'";
                 db.execSQL(deleteQuery);
+*/
+                String userId = sp.getString(ConstantSP.USERID, "");
+
+                DeleteApiClient.deleteUser(Dashboard.this, userId, new DeleteApiClient.DeleteUserCallback() {
+                    @Override
+                    public void onSuccess(String message) {
+                        Toast.makeText(Dashboard.this, message, Toast.LENGTH_SHORT).show();
+                        finish(); // go back after deletion
+                    }
+
+                    @Override
+                    public void onError(String errorMessage) {
+                        Toast.makeText(Dashboard.this, errorMessage, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
                 Toast.makeText(Dashboard.this, "Account deleted successfully", Toast.LENGTH_SHORT).show();
                 doLogOut();
             }
@@ -210,6 +230,7 @@ public class Dashboard extends AppCompatActivity {
         });
         builder.show();
     }
+
 
     private void doLogOut() {
         sp.edit().clear().commit();
