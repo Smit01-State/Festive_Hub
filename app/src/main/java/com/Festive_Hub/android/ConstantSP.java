@@ -23,5 +23,7 @@ public class ConstantSP {
     public static final String PRODUCTPRICE = "product_price";
     public static final String PRODUCTDISCOUNT = "product_discount";
     public static final String PRODUCTIMAGE = "product_image";
-
+    public static final String PRODUCTDATE = "product_date";
+    public static final String PRODUCTTIME = "product_time";
+    public static final String PRODUCTLOCATION = "product_location";
 }

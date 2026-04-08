@@ -31,18 +31,22 @@ public class EventDetailAdapter extends RecyclerView.Adapter<EventDetailAdapter.
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_eventdetail, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_events, parent, false);
         return new MyHolder(view);
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
         TextView name, vendor, discPrice, origPrice, discountTag;
+        TextView date, time, location;
         ImageView image;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.custom_event_name);
             vendor = itemView.findViewById(R.id.custom_event_vendor);
+            date = itemView.findViewById(R.id.custom_event_date);
+            time = itemView.findViewById(R.id.custom_event_time);
+            location = itemView.findViewById(R.id.custom_event_location);
             discPrice = itemView.findViewById(R.id.custom_event_discount_price);
             origPrice = itemView.findViewById(R.id.custom_event_original_price);
             discountTag = itemView.findViewById(R.id.custom_event_discount_tag);
@@ -55,6 +59,28 @@ public class EventDetailAdapter extends RecyclerView.Adapter<EventDetailAdapter.
         EventList event = arrayList.get(position);
         holder.name.setText(event.getEventName());
         holder.vendor.setText(event.getVendorName());
+
+        if (event.getEventDate() != null && !event.getEventDate().isEmpty()) {
+            holder.date.setText("Date: " + event.getEventDate());
+            holder.date.setVisibility(View.VISIBLE);
+        } else {
+            holder.date.setVisibility(View.GONE);
+        }
+
+        if (event.getEventTime() != null && !event.getEventTime().isEmpty()) {
+            holder.time.setText("Time: " + event.getEventTime());
+            holder.time.setVisibility(View.VISIBLE);
+        } else {
+            holder.time.setVisibility(View.GONE);
+        }
+
+        if (event.getLocation() != null && !event.getLocation().isEmpty()) {
+            holder.location.setText("Location: " + event.getLocation());
+            holder.location.setVisibility(View.VISIBLE);
+        } else {
+            holder.location.setVisibility(View.GONE);
+        }
+
         holder.discPrice.setText(ConstantSP.PRICE_SYMBOL + event.getEventDiscountPrice());
         holder.origPrice.setText(ConstantSP.PRICE_SYMBOL + event.getEventPrice());
         holder.discountTag.setText(event.getDiscount() + "% OFF");
@@ -73,6 +99,9 @@ public class EventDetailAdapter extends RecyclerView.Adapter<EventDetailAdapter.
             sp.edit().putString(ConstantSP.PRODUCTDISCOUNTPRICE, arrayList.get(pos).getEventDiscountPrice()).commit();
             sp.edit().putString(ConstantSP.PRODUCTDISCOUNT, arrayList.get(pos).getDiscount()).commit();
             sp.edit().putString(ConstantSP.PRODUCTIMAGE, arrayList.get(pos).getImage()).commit();
+            sp.edit().putString(ConstantSP.PRODUCTDATE, arrayList.get(pos).getEventDate()).commit();
+            sp.edit().putString(ConstantSP.PRODUCTTIME, arrayList.get(pos).getEventTime()).commit();
+            sp.edit().putString(ConstantSP.PRODUCTLOCATION, arrayList.get(pos).getLocation()).commit();
 
             Intent intent = new Intent(context, EventDetailActivity.class);
             context.startActivity(intent);

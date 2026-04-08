@@ -16,6 +16,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
     ImageView mainImage, wishlistBtn, minusBtn, plusBtn, eventCartBtn;
     TextView vendorLabel, nameLabel, currentPriceLabel, originalPriceLabel, discountLabel, quantityLabel;
+    TextView dateLabel, timeLabel, locationLabel;
     android.widget.LinearLayout qtyLayout;
     android.widget.Button payNowBtn;
 
@@ -25,7 +26,7 @@ public class EventDetailActivity extends AppCompatActivity {
     boolean isWishlisted = false;
 
     // Data from previous page
-    String sName, sVendor, sPrice, sDiscountPrice, sDiscount, sImage;
+    String sName, sVendor, sPrice, sDiscountPrice, sDiscount, sImage, sDate, sTime, sLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,9 @@ public class EventDetailActivity extends AppCompatActivity {
         plusBtn = findViewById(R.id.event_detail_plus);
         vendorLabel = findViewById(R.id.event_detail_vendor);
         nameLabel = findViewById(R.id.event_detail_name);
+        dateLabel = findViewById(R.id.event_detail_date);
+        timeLabel = findViewById(R.id.event_detail_time);
+        locationLabel = findViewById(R.id.event_detail_location);
         currentPriceLabel = findViewById(R.id.event_detail_discounted_price);
         originalPriceLabel = findViewById(R.id.event_detail_original_price);
         discountLabel = findViewById(R.id.event_detail_discount);
@@ -105,6 +109,9 @@ public class EventDetailActivity extends AppCompatActivity {
         sDiscountPrice = sharedPref.getString(ConstantSP.PRODUCTDISCOUNTPRICE, "");
         sDiscount = sharedPref.getString(ConstantSP.PRODUCTDISCOUNT, "");
         sImage = sharedPref.getString(ConstantSP.PRODUCTIMAGE, "");
+        sDate = sharedPref.getString(ConstantSP.PRODUCTDATE, "");
+        sTime = sharedPref.getString(ConstantSP.PRODUCTTIME, "");
+        sLocation = sharedPref.getString(ConstantSP.PRODUCTLOCATION, "");
     }
 
     private void updateUI() {
@@ -114,6 +121,27 @@ public class EventDetailActivity extends AppCompatActivity {
         originalPriceLabel.setText(ConstantSP.PRICE_SYMBOL + sPrice);
         discountLabel.setText(sDiscount + "% OFF");
         quantityLabel.setText(String.valueOf(currentQty));
+
+        if (sDate != null && !sDate.isEmpty()) {
+            dateLabel.setText("Date: " + sDate);
+            dateLabel.setVisibility(android.view.View.VISIBLE);
+        } else {
+            dateLabel.setVisibility(android.view.View.GONE);
+        }
+
+        if (sTime != null && !sTime.isEmpty()) {
+            timeLabel.setText("Time: " + sTime);
+            timeLabel.setVisibility(android.view.View.VISIBLE);
+        } else {
+            timeLabel.setVisibility(android.view.View.GONE);
+        }
+
+        if (sLocation != null && !sLocation.isEmpty()) {
+            locationLabel.setText("Location: " + sLocation);
+            locationLabel.setVisibility(android.view.View.VISIBLE);
+        } else {
+            locationLabel.setVisibility(android.view.View.GONE);
+        }
 
         Glide.with(this).load(sImage).placeholder(R.mipmap.ic_launcher).into(mainImage);
     }

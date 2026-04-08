@@ -34,9 +34,19 @@ public class SelectEventClient {
         StringRequest request = new StringRequest(Request.Method.GET, finalUrl,
                 response -> {
                     try {
+                        android.util.Log.d("SelectEventClient", "Raw response: " + response);
                         JSONObject json = new JSONObject(response);
-                        if (json.getString("status").equals("success")) {
-                            callback.onFetched(json.getJSONArray("data"));
+                        String status = json.optString("status", "");
+                        if (status.equalsIgnoreCase("success") || status.equalsIgnoreCase("true") || status.equals("1")) {
+                            JSONArray dataArray = new JSONArray();
+                            if (json.has("data")) {
+                                dataArray = json.getJSONArray("data");
+                            } else if (json.has("events")) {
+                                dataArray = json.getJSONArray("events");
+                            } else {
+                                android.util.Log.w("SelectEventClient", "No 'data' or 'events' array found in response object");
+                            }
+                            callback.onFetched(dataArray);
                         } else {
                             callback.onError(json.getString("message"));
                         }

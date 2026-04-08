@@ -50,13 +50,22 @@
                 android:layout_marginTop="@dimen/_4sdp" />
 
             <TextView
+                android:id="@+id/event_detail_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date: 2024-10-31"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginTop="@dimen/_4sdp" />
+
+            <TextView
                 android:id="@+id/event_detail_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Time: 10:00 AM"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_13sdp"
-                android:layout_marginTop="@dimen/_4sdp" />
+                android:layout_marginTop="@dimen/_2sdp" />
 
             <TextView
                 android:id="@+id/event_detail_location"

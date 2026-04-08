@@ -40,7 +40,8 @@ public class InsertEventClient {
                 response -> {
                     try {
                         JSONObject json = new JSONObject(response);
-                        if (json.getString("status").equals("success")) {
+                        String status = json.optString("status", "");
+                        if (status.equalsIgnoreCase("success") || status.equalsIgnoreCase("true") || status.equals("1")) {
                             callback.onSuccess(json.getString("message"));
                         } else {
                             callback.onError(json.getString("message"));

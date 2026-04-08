@@ -2,6 +2,7 @@ package com.Festive_Hub.android;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -69,12 +70,14 @@ public class EventManagerActivity extends AppCompatActivity {
                     adapter = new EventManagerAdapter(EventManagerActivity.this, eventList);
                     recyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
+                    Log.e("EventManagerActivity", "Error parsing events", e);
                     Toast.makeText(EventManagerActivity.this, "Error parsing events", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onError(String error) {
+                Log.e("EventManagerActivity", "Fetch error: " + error);
                 Toast.makeText(EventManagerActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
             }
         });
