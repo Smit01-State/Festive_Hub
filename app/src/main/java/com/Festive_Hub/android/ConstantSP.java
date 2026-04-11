@@ -16,14 +16,14 @@ public class ConstantSP {
     public static String CATEGORYID = "category_id";
 
 
-    public static final String PRODUCTID = "product_id";
-    public static final String PRODUCTVENDORNAME = "product_vendor_name";
-    public static final String PRODUCTNAME = "product_name";
-    public static final String PRODUCTDISCOUNTPRICE = "product_after_discount";
-    public static final String PRODUCTPRICE = "product_price";
-    public static final String PRODUCTDISCOUNT = "product_discount";
-    public static final String PRODUCTIMAGE = "product_image";
-    public static final String PRODUCTDATE = "product_date";
-    public static final String PRODUCTTIME = "product_time";
-    public static final String PRODUCTLOCATION = "product_location";
+    public static final String EVENTID = "product_id";
+    public static final String EVENTVENDORNAME = "product_vendor_name";
+    public static final String EVENTNAME = "product_name";
+    public static final String EVENTDISCOUNTPRICE = "product_after_discount";
+    public static final String EVENTPRICE = "product_price";
+    public static final String EVENTDISCOUNT = "product_discount";
+    public static final String EVENTIMAGE = "product_image";
+    public static final String EVENTDATE = "product_date";
+    public static final String EVENTTIME = "product_time";
+    public static final String ENVENTLOCATION = "product_location";
 }

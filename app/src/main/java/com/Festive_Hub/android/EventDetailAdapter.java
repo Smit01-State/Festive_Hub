@@ -92,16 +92,16 @@ public class EventDetailAdapter extends RecyclerView.Adapter<EventDetailAdapter.
 
         holder.itemView.setOnClickListener(v -> {
             int pos = holder.getAdapterPosition();
-            sp.edit().putInt(ConstantSP.PRODUCTID, arrayList.get(pos).getEventID()).commit();
-            sp.edit().putString(ConstantSP.PRODUCTNAME, arrayList.get(pos).getEventName()).commit();
-            sp.edit().putString(ConstantSP.PRODUCTVENDORNAME, arrayList.get(pos).getVendorName()).commit();
-            sp.edit().putString(ConstantSP.PRODUCTPRICE, arrayList.get(pos).getEventPrice()).commit();
-            sp.edit().putString(ConstantSP.PRODUCTDISCOUNTPRICE, arrayList.get(pos).getEventDiscountPrice()).commit();
-            sp.edit().putString(ConstantSP.PRODUCTDISCOUNT, arrayList.get(pos).getDiscount()).commit();
-            sp.edit().putString(ConstantSP.PRODUCTIMAGE, arrayList.get(pos).getImage()).commit();
-            sp.edit().putString(ConstantSP.PRODUCTDATE, arrayList.get(pos).getEventDate()).commit();
-            sp.edit().putString(ConstantSP.PRODUCTTIME, arrayList.get(pos).getEventTime()).commit();
-            sp.edit().putString(ConstantSP.PRODUCTLOCATION, arrayList.get(pos).getLocation()).commit();
+            sp.edit().putInt(ConstantSP.EVENTID, arrayList.get(pos).getEventID()).commit();
+            sp.edit().putString(ConstantSP.EVENTNAME, arrayList.get(pos).getEventName()).commit();
+            sp.edit().putString(ConstantSP.EVENTVENDORNAME, arrayList.get(pos).getVendorName()).commit();
+            sp.edit().putString(ConstantSP.EVENTPRICE, arrayList.get(pos).getEventPrice()).commit();
+            sp.edit().putString(ConstantSP.EVENTDISCOUNTPRICE, arrayList.get(pos).getEventDiscountPrice()).commit();
+            sp.edit().putString(ConstantSP.EVENTDISCOUNT, arrayList.get(pos).getDiscount()).commit();
+            sp.edit().putString(ConstantSP.EVENTIMAGE, arrayList.get(pos).getImage()).commit();
+            sp.edit().putString(ConstantSP.EVENTDATE, arrayList.get(pos).getEventDate()).commit();
+            sp.edit().putString(ConstantSP.EVENTTIME, arrayList.get(pos).getEventTime()).commit();
+            sp.edit().putString(ConstantSP.ENVENTLOCATION, arrayList.get(pos).getLocation()).commit();
 
             Intent intent = new Intent(context, EventDetailActivity.class);
             context.startActivity(intent);

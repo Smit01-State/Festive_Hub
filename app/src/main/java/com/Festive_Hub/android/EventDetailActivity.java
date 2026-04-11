@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.Festive_Hub.android.network.Cart.CartApiClient;
 import com.bumptech.glide.Glide;
 
 public class EventDetailActivity extends AppCompatActivity {
@@ -22,6 +23,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
     SQLiteDatabase db;
     int eventID;
+    int uid;
     int currentQty = 1;
     boolean isWishlisted = false;
 
@@ -102,16 +104,22 @@ public class EventDetailActivity extends AppCompatActivity {
 
     private void loadDataFromSP() {
         android.content.SharedPreferences sharedPref = getSharedPreferences(ConstantSP.PREF, MODE_PRIVATE);
-        eventID = sharedPref.getInt(ConstantSP.PRODUCTID, 0);
-        sName = sharedPref.getString(ConstantSP.PRODUCTNAME, "");
-        sVendor = sharedPref.getString(ConstantSP.PRODUCTVENDORNAME, "");
-        sPrice = sharedPref.getString(ConstantSP.PRODUCTPRICE, "");
-        sDiscountPrice = sharedPref.getString(ConstantSP.PRODUCTDISCOUNTPRICE, "");
-        sDiscount = sharedPref.getString(ConstantSP.PRODUCTDISCOUNT, "");
-        sImage = sharedPref.getString(ConstantSP.PRODUCTIMAGE, "");
-        sDate = sharedPref.getString(ConstantSP.PRODUCTDATE, "");
-        sTime = sharedPref.getString(ConstantSP.PRODUCTTIME, "");
-        sLocation = sharedPref.getString(ConstantSP.PRODUCTLOCATION, "");
+        String uidString = sharedPref.getString(ConstantSP.USERID, "0");
+        try {
+            uid = Integer.parseInt(uidString);
+        } catch(NumberFormatException e) {
+            uid = 0;
+        }
+        eventID = sharedPref.getInt(ConstantSP.EVENTID, 0);
+        sName = sharedPref.getString(ConstantSP.EVENTNAME, "");
+        sVendor = sharedPref.getString(ConstantSP.EVENTVENDORNAME, "");
+        sPrice = sharedPref.getString(ConstantSP.EVENTPRICE, "");
+        sDiscountPrice = sharedPref.getString(ConstantSP.EVENTDISCOUNTPRICE, "");
+        sDiscount = sharedPref.getString(ConstantSP.EVENTDISCOUNT, "");
+        sImage = sharedPref.getString(ConstantSP.EVENTIMAGE, "");
+        sDate = sharedPref.getString(ConstantSP.EVENTDATE, "");
+        sTime = sharedPref.getString(ConstantSP.EVENTTIME, "");
+        sLocation = sharedPref.getString(ConstantSP.ENVENTLOCATION, "");
     }
 
     private void updateUI() {
@@ -173,46 +181,99 @@ public class EventDetailActivity extends AppCompatActivity {
     }
 
     private void checkCartStatus() {
-        Cursor cursor = db.rawQuery("SELECT QTY FROM CART WHERE EVENTID = " + eventID, null);
-        if (cursor.moveToFirst()) {
-            currentQty = cursor.getInt(0);
-            eventCartBtn.setVisibility(android.view.View.GONE);
-            qtyLayout.setVisibility(android.view.View.VISIBLE);
-        } else {
-            currentQty = 1;
-            eventCartBtn.setVisibility(android.view.View.VISIBLE);
-            qtyLayout.setVisibility(android.view.View.GONE);
-        }
-        quantityLabel.setText(String.valueOf(currentQty));
-        cursor.close();
+        CartApiClient.getCartQty(this, uid, eventID, new CartApiClient.CartCallback() {
+            @Override
+            public void onSuccess(org.json.JSONObject response) {
+                try {
+                    boolean status = response.getBoolean("status");
+                    if (status) {
+                        currentQty = response.getInt("qty");
+                        eventCartBtn.setVisibility(android.view.View.GONE);
+                        qtyLayout.setVisibility(android.view.View.VISIBLE);
+                    } else {
+                        currentQty = 1;
+                        eventCartBtn.setVisibility(android.view.View.VISIBLE);
+                        qtyLayout.setVisibility(android.view.View.GONE);
+                    }
+                    quantityLabel.setText(String.valueOf(currentQty));
+                } catch (org.json.JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                currentQty = 1;
+                eventCartBtn.setVisibility(android.view.View.VISIBLE);
+                qtyLayout.setVisibility(android.view.View.GONE);
+                quantityLabel.setText(String.valueOf(currentQty));
+            }
+        });
     }
 
     private void addToCart() {
-        db.execSQL("INSERT INTO CART(EVENTID, QTY) VALUES(" + eventID + ", " + currentQty + ")");
-        eventCartBtn.setVisibility(android.view.View.GONE);
-        qtyLayout.setVisibility(android.view.View.VISIBLE);
-        quantityLabel.setText(String.valueOf(currentQty));
-        Toast.makeText(this, "Added to Cart", Toast.LENGTH_SHORT).show();
+        CartApiClient.addToCart(this, uid, eventID, currentQty, new CartApiClient.CartCallback() {
+            @Override
+            public void onSuccess(org.json.JSONObject response) {
+                try {
+                    if (response.getBoolean("status")) {
+                        eventCartBtn.setVisibility(android.view.View.GONE);
+                        qtyLayout.setVisibility(android.view.View.VISIBLE);
+                        quantityLabel.setText(String.valueOf(currentQty));
+                        Toast.makeText(EventDetailActivity.this, "Added to Cart", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(EventDetailActivity.this, response.optString("message", "Error adding"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (org.json.JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(EventDetailActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void removeFromCart() {
-        db.execSQL("DELETE FROM CART WHERE EVENTID = " + eventID);
-        eventCartBtn.setVisibility(android.view.View.VISIBLE);
-        qtyLayout.setVisibility(android.view.View.GONE);
-        currentQty = 1;
-        quantityLabel.setText(String.valueOf(currentQty));
-        Toast.makeText(this, "Removed from Cart", Toast.LENGTH_SHORT).show();
+        CartApiClient.removeFromCart(this, uid, eventID, new CartApiClient.CartCallback() {
+            @Override
+            public void onSuccess(org.json.JSONObject response) {
+                try {
+                    if (response.getBoolean("status")) {
+                        eventCartBtn.setVisibility(android.view.View.VISIBLE);
+                        qtyLayout.setVisibility(android.view.View.GONE);
+                        currentQty = 1;
+                        quantityLabel.setText(String.valueOf(currentQty));
+                        Toast.makeText(EventDetailActivity.this, "Removed from Cart", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(EventDetailActivity.this, response.optString("message", "Error removing"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (org.json.JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(EventDetailActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void updateCartQty() {
         quantityLabel.setText(String.valueOf(currentQty));
+        CartApiClient.updateQty(this, uid, eventID, currentQty, new CartApiClient.CartCallback() {
+            @Override
+            public void onSuccess(org.json.JSONObject response) {
+                // Log or handle success
+            }
 
-        Cursor cursor = db.rawQuery("SELECT * FROM CART WHERE EVENTID = " + eventID, null);
-        if (cursor.getCount() > 0) {
-            db.execSQL("UPDATE CART SET QTY = " + currentQty + " WHERE EVENTID = " + eventID);
-        } else {
-            db.execSQL("INSERT INTO CART(EVENTID, QTY) VALUES(" + eventID + ", " + currentQty + ")");
-        }
-        cursor.close();
+            @Override
+            public void onError(String error) {
+                Toast.makeText(EventDetailActivity.this, "Error updating quantity", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
