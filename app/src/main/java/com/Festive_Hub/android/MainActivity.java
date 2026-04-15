@@ -17,6 +17,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.Festive_Hub.android.Hash.MD5Hash;
+import com.Festive_Hub.android.network.LoginApiClient;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
 
     Button login;
@@ -51,11 +57,6 @@ public class MainActivity extends AppCompatActivity {
         CreateAccount = findViewById(R.id.main_createAccount);
 
 
-        db = openOrCreateDatabase("finalApp", MODE_PRIVATE, null);
-        String createTable = "CREATE TABLE  IF NOT EXISTS FUSER(USERID INTEGER PRIMARY KEY AUTOINCREMENT ,NAME VARCHAR(50),EMAIL VARCHAR(20),CONTACTS BIGINT(10),PASSWORD VARCHAR(10),GENDER ENUM,CITY VARCHAR(10))";
-        db.execSQL(createTable);
-
-
         login.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -70,48 +71,52 @@ public class MainActivity extends AppCompatActivity {
                             Password.setError("valid Length(minimum 6) required");
                         } else {
 
-                            String SelectQuery = "SELECT * FROM FUSER WHERE (EMAIL='" + Email.getText().toString() + "' or CONTACTS = '" + Email.getText().toString() + "' ) and PASSWORD = '" + Password.getText().toString() + "' ";
-                            Cursor cursor = db.rawQuery(SelectQuery, null);
+                            // ── Get values from fields ────────────────
+                            String email    = Email.getText().toString().trim();
+                            String password = Password.getText().toString().trim();
+                            String HashPassword = MD5Hash.md5Hash(password);
 
-                            if (cursor.getCount() > 0) {
-
-
-
-                       /* System.out.println("login successfully");
-                        Log.d("login","successfully login");
-                        Log.e("login","successfully login");
-                        Log.w("login","successfully login");*/
-
-                                while (cursor.moveToNext()) {
-
-                                    String sUserID = cursor.getString(0);
-                                    String sName = cursor.getString(1);
-                                    String sEmail = cursor.getString(2);
-                                    String sContacts = cursor.getString(3);
-                                    String sPassword = cursor.getString(4);
-                                    String sGender = cursor.getString(5);
-                                    String sCity = cursor.getString(6);
-
-                                    sp.edit().putString(ConstantSP.USERID, sUserID).commit();
-                                    sp.edit().putString(ConstantSP.NAME, sName).commit();
-                                    sp.edit().putString(ConstantSP.EMAIL, sEmail).commit();
-                                    sp.edit().putString(ConstantSP.CONTACTS, sContacts).commit();
-                                    sp.edit().putString(ConstantSP.PASSWORD, sPassword).commit();
-                                    sp.edit().putString(ConstantSP.GENDER, sGender).commit();
-                                    sp.edit().putString(ConstantSP.CITY, sCity).commit();
-
-                                }
-                                Toast.makeText(MainActivity.this, "login successfully", Toast.LENGTH_SHORT).show();
-
-                                Intent intent = new Intent(MainActivity.this, Dashboard.class);
+                            if (email.equals("admin@gmail.com") && password.equals("123abc")) {
+                                Toast.makeText(MainActivity.this, "Admin Login Successfully", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(MainActivity.this, EventManagerActivity.class);
                                 startActivity(intent);
-
-                            } else {
-
-                                Toast.makeText(MainActivity.this, "credential invalid!", Toast.LENGTH_SHORT).show();
-
+                                finish();
+                                return;
                             }
 
+                            // ── Call API instead of SQLite ────────────
+                            LoginApiClient loginApiClient = new LoginApiClient(MainActivity.this);
+
+                            loginApiClient.loginUser(email, HashPassword , new LoginApiClient.LoginCallback() {
+
+                                @Override
+                                public void onSuccess(JSONObject userData) throws JSONException {
+
+                                    // ── Save to SharedPreferences ─────
+                                    // same sp.edit() you were doing before
+
+
+                                    sp.edit().putString(ConstantSP.USERID, userData.getString("userid")).apply();
+                                    sp.edit().putString(ConstantSP.NAME, userData.getString("name")).apply();
+                                    sp.edit().putString(ConstantSP.EMAIL, userData.getString("email")).apply();
+                                    sp.edit().putString(ConstantSP.CONTACTS, userData.getString("contact")).apply();
+                                    sp.edit().putString(ConstantSP.PASSWORD, userData.getString("password")).apply();
+                                    sp.edit().putString(ConstantSP.GENDER, userData.getString("gender")).apply();
+                                    sp.edit().putString(ConstantSP.CITY, userData.getString("city")).apply();
+
+                                    Toast.makeText(MainActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+
+                                    // ── Go to Dashboard ───────────────
+                                    Intent intent = new Intent(MainActivity.this, Dashboard.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+
+                                @Override
+                                public void onError(String error) {
+                                    Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
                         }
 

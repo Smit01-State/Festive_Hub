@@ -1,6 +1,8 @@
 package com.Festive_Hub.android;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +22,12 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     Context context;
 
     ArrayList<CategoryList> arrayList;
+
+    SharedPreferences SP;
     public CategoryRecyclerAdapter(Context context, ArrayList<CategoryList> arrayList) {
      this.context =context;
      this.arrayList=arrayList;
+     SP= context.getSharedPreferences(ConstantSP.PREF,context.MODE_PRIVATE);
 
     }
 
@@ -41,6 +46,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
+
             imageView = itemView.findViewById(R.id.custom_category_image);
             name = itemView.findViewById(R.id.custom_category_name);
 
@@ -53,19 +59,24 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         holder.name.setText(arrayList.get(position).getName());
         Glide.with(context).load(arrayList.get(position).getImage()).placeholder(R.mipmap.app_icon).into(holder.imageView);
 
-        holder.name.setOnClickListener(new View.OnClickListener() {
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, arrayList.get(position).getName(), Toast.LENGTH_SHORT).show();
+
+                SP.edit().putInt(ConstantSP.CATEGORYID,arrayList.get(position).getId()).commit();
+
+                Intent intent = new Intent(context, EventActivity.class);
+                context.startActivity(intent);
             }
         });
 
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
+        /*holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "Image Taped"+arrayList.get(position).getName(), Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
 
     }

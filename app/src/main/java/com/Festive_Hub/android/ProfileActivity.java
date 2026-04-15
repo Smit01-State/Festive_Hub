@@ -19,25 +19,28 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.Festive_Hub.android.Hash.MD5Hash;
+import com.Festive_Hub.android.network.ApiClient;
+import com.Festive_Hub.android.network.UpdateApiClient;
+
 import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity {
-    
-    Button Edit,Update;
 
-    TextView Login;
-    EditText name , Email, Contact , Password, ConfirmPassword;
+    Button Edit, Update;
+
+    EditText Name, Email, Contact, Password, ConfirmPassword;
     CardView ConfirmPasswordCard;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     RadioGroup gender;
-    RadioButton male,female;
-    CheckBox terms;
+    RadioButton male, female;
     String sgender;
 
     Spinner spinner;
@@ -63,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
 
-        name = findViewById(R.id.Profile_name);
+        Name = findViewById(R.id.Profile_name);
         Email = findViewById(R.id.Profile_Email);
         Contact = findViewById(R.id.Profile_contact);
         Password = findViewById(R.id.Profile_password);
@@ -83,30 +86,59 @@ public class ProfileActivity extends AppCompatActivity {
         cityArray.add("vadodra");
         cityArray.add("surat");
         cityArray.add("rajkot");
-        cityArray.add(0,"Select City");
+        cityArray.add(0, "Select City");
 
 
-
-        sp = getSharedPreferences(ConstantSP.PREF,MODE_PRIVATE);
-        db = openOrCreateDatabase("finalApp",MODE_PRIVATE,null);
+        sp = getSharedPreferences(ConstantSP.PREF, MODE_PRIVATE);
+        db = openOrCreateDatabase("finalApp", MODE_PRIVATE, null);
         String ProfileTable = "CREATE TABLE  IF NOT EXISTS FUSER(USERID INTEGER PRIMARY KEY AUTOINCREMENT ,NAME VARCHAR(50),EMAIL VARCHAR(20),CONTACTS BIGINT(10),PASSWORD VARCHAR(10),GENDER ENUM,CITY VARCHAR(10))";
         db.execSQL(ProfileTable);
 
 
+        AlertDialog loadingDialog = new AlertDialog.Builder(ProfileActivity.this)
+                .setView(R.layout.dialog_loading) // or use default below if no custom layout
+                .setCancelable(false) // ✅ user can't dismiss it manually
+                .create();
 
-        ArrayAdapter adapter = new ArrayAdapter(ProfileActivity.this, android.R.layout.simple_list_item_1,cityArray);
+        UpdateApiClient.UpdateCallback updateCallback = new UpdateApiClient.UpdateCallback() {
+            @Override
+            public void onSuccess(String message) {
+
+
+                sp.edit()
+                        .putString(ConstantSP.NAME, Name.getText().toString())
+                        .putString(ConstantSP.EMAIL, Email.getText().toString())
+                        .putString(ConstantSP.CONTACTS, Contact.getText().toString())
+                        .putString(ConstantSP.PASSWORD, Password.getText().toString())
+                        .putString(ConstantSP.GENDER, sgender)
+                        .putString(ConstantSP.CITY, scity)
+                        .commit();
+
+                loadingDialog.dismiss();
+
+                System.out.println("update successfully");
+                Toast.makeText(ProfileActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(String error) {
+                loadingDialog.dismiss();
+                Toast.makeText(ProfileActivity.this, error, Toast.LENGTH_SHORT).show();
+            }
+        };
+
+
+        ArrayAdapter adapter = new ArrayAdapter(ProfileActivity.this, android.R.layout.simple_list_item_1, cityArray);
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
         spinner.setAdapter(adapter);
-
 
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position==0){
+                if (position == 0) {
                     scity = "";
-                }
-                else {
+                } else {
                     //sCity = cityArray[i];
                     scity = cityArray.get(position);
                     Toast.makeText(ProfileActivity.this, scity, Toast.LENGTH_SHORT).show();
@@ -132,68 +164,60 @@ public class ProfileActivity extends AppCompatActivity {
         );
 
         Update.setOnClickListener(
-                new View.OnClickListener(){
+                new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
 
-                        if(name.getText().toString().trim().equals("")){
-                            name.setError("Enter your name");}
-                        else if(Email.getText().toString().trim().equals("")){
+                        String userid = sp.getString(ConstantSP.USERID, "");
+                        String name = Name.getText().toString().trim();
+                        String email = Email.getText().toString().trim();
+                        String contact = Contact.getText().toString().trim();
+                        String password = Password.getText().toString().trim();
+
+                        String HashPassword = MD5Hash.md5Hash(password);
+
+
+                        if (Name.getText().toString().trim().equals("")) {
+                            Name.setError("Enter your name");
+                        } else if (Email.getText().toString().trim().equals("")) {
                             Email.setError(" Email Required ");
-                        }
-                        else if (!Email.getText().toString().trim().matches(emailPattern)) {
+                        } else if (!Email.getText().toString().trim().matches(emailPattern)) {
                             Email.setError("valid Email Id required");
-                        }
-                        else if (Contact.getText().toString().trim().length()<10) {
+                        } else if (Contact.getText().toString().trim().length() < 10) {
                             Contact.setError("valid contact number required");
 
                         } else if (Password.getText().toString().trim().equals("")) {
                             Password.setError("password required");
-                        }
-                        else if (Password.getText().toString().trim().length()<6) {
+                        } else if (Password.getText().toString().trim().length() < 6) {
                             Password.setError("valid Length(minimum 6) required");
-                        }
-                        else if (ConfirmPassword.getText().toString().trim().equals("")) {
+                        } else if (ConfirmPassword.getText().toString().trim().equals("")) {
                             ConfirmPassword.setError("password required");
-                        }
-                        else if (ConfirmPassword.getText().toString().trim().length()<6) {
+                        } else if (ConfirmPassword.getText().toString().trim().length() < 6) {
                             ConfirmPassword.setError("valid Length(minimum 6) required");
-                        }
-                        else if (!ConfirmPassword.getText().toString().matches(Password.getText().toString().trim())) {
+                        } else if (!ConfirmPassword.getText().toString().matches(Password.getText().toString().trim())) {
                             ConfirmPassword.setError("password not match");
-                        }
-                        else if(gender.getCheckedRadioButtonId() == -1){
+                        } else if (gender.getCheckedRadioButtonId() == -1) {
                             Toast.makeText(ProfileActivity.this, "Please Select Gender", Toast.LENGTH_SHORT).show();
-                        }
-                        else if(scity == ""){
+                        } else if (scity == "") {
                             Toast.makeText(ProfileActivity.this, "Please Select City", Toast.LENGTH_SHORT).show();
-                        }
+                        } else {
 
-                        else{
+                           /* String UpdateQuery = "UPDATE FUSER " +
+                                    "SET NAME='" + Name.getText().toString() + "'," +
+                                    "EMAIL='" + Email.getText().toString() + "'," +
+                                    "CONTACTS='" + Contact.getText().toString() + "'," +
+                                    "PASSWORD='" + HashPassword + "'," +
+                                    "GENDER='" + sgender + "',CITY='" + scity + "' WHERE USERID = '" + sp.getString(ConstantSP.USERID, "") + "' ";
+                            db.execSQL(UpdateQuery);*/
 
-                            String UpdateQuery = "UPDATE FUSER " +
-                                    "SET NAME='"+name.getText().toString()+"'," +
-                                    "EMAIL='"+Email.getText().toString()+"'," +
-                                    "CONTACTS='"+Contact.getText().toString()+"'," +
-                                    "PASSWORD='"+Password.getText().toString()+"'," +
-                                    "GENDER='"+sgender+"',CITY='"+scity+"' WHERE USERID = '"+sp.getString(ConstantSP.USERID,"")+"' ";
-                            db.execSQL(UpdateQuery);
+                            UpdateApiClient.updateUser(ProfileActivity.this, userid, name, email, contact, HashPassword, sgender, scity, updateCallback);
 
-                            sp.edit().putString(ConstantSP.NAME,name.getText().toString()).commit();
-                            sp.edit().putString(ConstantSP.EMAIL,Email.getText().toString()).commit();
-                            sp.edit().putString(ConstantSP.CONTACTS,Contact.getText().toString()).commit();
-                            sp.edit().putString(ConstantSP.PASSWORD,Password.getText().toString()).commit();
-                            sp.edit().putString(ConstantSP.GENDER,sgender).commit();
-                            sp.edit().putString(ConstantSP.CITY,scity).commit();
-
-                            System.out.println("signup successfully");
-                            Toast.makeText(ProfileActivity.this,"profile update Successfully",Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(ProfileActivity.this,"profile update Successfully",Toast.LENGTH_SHORT).show();
 
                             Intent intent = new Intent(ProfileActivity.this, Dashboard.class);
                             startActivity(intent);
-
-
+                            finish();
                             onBackPressed();
                         }
 
@@ -214,20 +238,19 @@ public class ProfileActivity extends AppCompatActivity {
     private void setData(boolean b) {
 
 
-        if(b){
+        if (b) {
             ConfirmPasswordCard.setVisibility(View.VISIBLE);
             Edit.setVisibility(View.GONE);
             Update.setVisibility(View.VISIBLE);
 
-        }
-        else {
+        } else {
 
             ConfirmPasswordCard.setVisibility(View.GONE);
             Edit.setVisibility(View.VISIBLE);
             Update.setVisibility(View.GONE);
         }
 
-        name.setEnabled(b);
+        Name.setEnabled(b);
         Email.setEnabled(b);
         Contact.setEnabled(b);
         Password.setEnabled(b);
@@ -236,14 +259,14 @@ public class ProfileActivity extends AppCompatActivity {
         spinner.setEnabled(b);
 
 
-        name.setText(sp.getString(ConstantSP.NAME,""));
-        Email.setText(sp.getString(ConstantSP.EMAIL,""));
-        Contact.setText(sp.getString(ConstantSP.CONTACTS,""));
-        Password.setText(sp.getString(ConstantSP.PASSWORD,""));
-        ConfirmPassword.setText(sp.getString(ConstantSP.PASSWORD,""));
+        Name.setText(sp.getString(ConstantSP.NAME, ""));
+        Email.setText(sp.getString(ConstantSP.EMAIL, ""));
+        Contact.setText(sp.getString(ConstantSP.CONTACTS, ""));
+        Password.setText(sp.getString(ConstantSP.PASSWORD, ""));
+        ConfirmPassword.setText(sp.getString(ConstantSP.PASSWORD, ""));
 
-        sgender = sp.getString(ConstantSP.GENDER,"");
-        if (sgender.equalsIgnoreCase("male")){
+        sgender = sp.getString(ConstantSP.GENDER, "");
+        if (sgender.equalsIgnoreCase("male")) {
 
             male.setChecked(true);
             female.setChecked(false);
@@ -253,18 +276,17 @@ public class ProfileActivity extends AppCompatActivity {
             male.setChecked(false);
             female.setChecked(true);
 
-        }
-        else {
+        } else {
 
             male.setChecked(false);
             female.setChecked(false);
         }
 
-        scity = sp.getString(ConstantSP.CITY,"");
+        scity = sp.getString(ConstantSP.CITY, "");
         int iCityPosition = 0;
 
-        for(int i= 0;i<=cityArray.size();i++){
-            if(scity.equalsIgnoreCase(cityArray.get(i))){
+        for (int i = 0; i <= cityArray.size(); i++) {
+            if (scity.equalsIgnoreCase(cityArray.get(i))) {
                 iCityPosition = i;
                 break;
             }
@@ -274,3 +296,4 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 }
+

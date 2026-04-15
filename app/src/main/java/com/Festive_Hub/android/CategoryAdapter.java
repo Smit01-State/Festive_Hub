@@ -1,6 +1,7 @@
 package com.Festive_Hub.android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ public class CategoryAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, arrayList.get(position).getName(), Toast.LENGTH_SHORT).show();
+
             }
         });
 

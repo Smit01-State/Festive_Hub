@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:networkSecurityConfig="@xml/network_config"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,8 +15,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Festive_Hub">
         <activity
+            android:name=".CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WishlistActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EventDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EventActivity"
+            android:exported="false" />
+        <activity
             android:name=".CategoryRecyclerActivity"
             android:exported="false" />
+
         <activity
             android:name=".CategoryActivity"
             android:exported="false" />
@@ -40,6 +54,12 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+        <activity
+            android:name=".EventManagerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EventAddEditActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
