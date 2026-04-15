@@ -17,6 +17,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.Festive_Hub.android.Hash.MD5Hash;
 import com.Festive_Hub.android.network.LoginApiClient;
 
 import org.json.JSONException;
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                             // ── Get values from fields ────────────────
                             String email    = Email.getText().toString().trim();
                             String password = Password.getText().toString().trim();
+                            String HashPassword = MD5Hash.md5Hash(password);
 
                             if (email.equals("admin@gmail.com") && password.equals("123abc")) {
                                 Toast.makeText(MainActivity.this, "Admin Login Successfully", Toast.LENGTH_SHORT).show();
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                             // ── Call API instead of SQLite ────────────
                             LoginApiClient loginApiClient = new LoginApiClient(MainActivity.this);
 
-                            loginApiClient.loginUser(email, password, new LoginApiClient.LoginCallback() {
+                            loginApiClient.loginUser(email, HashPassword , new LoginApiClient.LoginCallback() {
 
                                 @Override
                                 public void onSuccess(JSONObject userData) throws JSONException {

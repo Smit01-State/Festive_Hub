@@ -3,6 +3,7 @@ package com.Festive_Hub.android;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,6 +24,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 
+import com.Festive_Hub.android.Hash.MD5Hash;
 import com.Festive_Hub.android.network.ApiClient;
 
 import java.util.ArrayList;
@@ -132,6 +134,9 @@ SQLiteDatabase db;
                         String Contact = contact.getText().toString().trim();
                         String Password = password.getText().toString().trim();
 
+                        String HashPassword = MD5Hash.md5Hash(Password);
+                        Log.d("hash", "onClick: "+HashPassword);
+
 
 
                         if(Name.equals("")){
@@ -171,16 +176,16 @@ SQLiteDatabase db;
                         }
                         else{
 
-                            String InsertQuery = "INSERT INTO FUSER (NAME,EMAIL,CONTACTS,PASSWORD,GENDER,CITY) values('"+Name+"','"+Email+"','"+Contact+"','"+Password +"','"+sgender+"','"+scity+"')";
-                            db.execSQL(InsertQuery);
-
+                           /* String InsertQuery = "INSERT INTO FUSER (NAME,EMAIL,CONTACTS,PASSWORD,GENDER,CITY) values('"+Name+"','"+Email+"','"+Contact+"','"+ HashPassword +"','"+sgender+"','"+scity+"')";
+                            db.execSQL(InsertQuery);*/
+                            apiClient.registerUser( Name, Email, Contact, HashPassword ,sgender,scity,callback);
                             System.out.println("signup successfully");
                             Toast.makeText(CreateAccount.this,"signup Successfully",Toast.LENGTH_SHORT).show();
 
                             Intent intent = new Intent(CreateAccount.this, MainActivity.class);
                             startActivity(intent);
 
-                            apiClient.registerUser(Name,Email,Contact,Password,sgender,scity,callback);
+
 
 
                             onBackPressed();
@@ -212,6 +217,7 @@ SQLiteDatabase db;
 
         @Override
         public void onError(String error) {
+            Log.e("ERROR", "onError: "+error);
             Toast.makeText(CreateAccount.this, error, Toast.LENGTH_SHORT).show();
         }
     };

@@ -26,6 +26,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.Festive_Hub.android.Hash.MD5Hash;
 import com.Festive_Hub.android.network.ApiClient;
 import com.Festive_Hub.android.network.UpdateApiClient;
 
@@ -174,6 +175,8 @@ public class ProfileActivity extends AppCompatActivity {
                         String contact = Contact.getText().toString().trim();
                         String password = Password.getText().toString().trim();
 
+                        String HashPassword = MD5Hash.md5Hash(password);
+
 
                         if (Name.getText().toString().trim().equals("")) {
                             Name.setError("Enter your name");
@@ -200,16 +203,15 @@ public class ProfileActivity extends AppCompatActivity {
                             Toast.makeText(ProfileActivity.this, "Please Select City", Toast.LENGTH_SHORT).show();
                         } else {
 
-                            String UpdateQuery = "UPDATE FUSER " +
+                           /* String UpdateQuery = "UPDATE FUSER " +
                                     "SET NAME='" + Name.getText().toString() + "'," +
                                     "EMAIL='" + Email.getText().toString() + "'," +
                                     "CONTACTS='" + Contact.getText().toString() + "'," +
-                                    "PASSWORD='" + Password.getText().toString() + "'," +
+                                    "PASSWORD='" + HashPassword + "'," +
                                     "GENDER='" + sgender + "',CITY='" + scity + "' WHERE USERID = '" + sp.getString(ConstantSP.USERID, "") + "' ";
-                            db.execSQL(UpdateQuery);
+                            db.execSQL(UpdateQuery);*/
 
-                            UpdateApiClient.updateUser(ProfileActivity.this, userid, name, email, contact, password, sgender, scity, updateCallback);
-
+                            UpdateApiClient.updateUser(ProfileActivity.this, userid, name, email, contact, HashPassword, sgender, scity, updateCallback);
 
                             // Toast.makeText(ProfileActivity.this,"profile update Successfully",Toast.LENGTH_SHORT).show();
 

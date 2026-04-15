@@ -62,14 +62,16 @@ public class CartActivity extends AppCompatActivity {
                         Log.d("CART_DEBUG", "Response keys: " + response.keys().toString());
 
                         JSONArray data = response.optJSONArray("cartItem");
-                        /*if (data == null) {
-                            // Try alternate key names the server might use
-                            data = response.optJSONArray("data");
-                            if (data == null)
-                                data = response.optJSONArray("cart");
-                            if (data == null)
-                                data = response.optJSONArray("items");
-                        }*/
+                        /*
+                         * if (data == null) {
+                         * // Try alternate key names the server might use
+                         * data = response.optJSONArray("data");
+                         * if (data == null)
+                         * data = response.optJSONArray("cart");
+                         * if (data == null)
+                         * data = response.optJSONArray("items");
+                         * }
+                         */
                         if (data == null) {
                             Log.d("CART_DEBUG", "No 'data' array found in response. Cart may be empty.");
                             runOnUiThread(() -> setupAdapter());

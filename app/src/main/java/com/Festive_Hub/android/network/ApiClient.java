@@ -56,12 +56,14 @@ public class ApiClient {
                         }
                     } catch (Exception e) {
                         callback.onError("Parse error: " + e.getMessage());
+                        Log.e("parse error", "registerUser: "+e.getMessage());
                     }
                 },
                 error -> {
                     Log.e("REGISTER_ERROR", error.toString());
                     callback.onError("Network error: " + error.toString());
                 }
+
         ) {
             // ── POST parameters sent to PHP ──────────
             @Override
