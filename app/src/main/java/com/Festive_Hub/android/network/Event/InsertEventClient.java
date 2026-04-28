@@ -1,6 +1,7 @@
 package com.Festive_Hub.android.network.Event;
 import android.content.Context;
 
+import com.Festive_Hub.android.ConstantSP;
 import com.Festive_Hub.android.network.AppController;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -14,7 +15,7 @@ import java.util.Map;
 
 public class InsertEventClient {
 
-    private static final String URL = "http://10.0.2.2/FinalGpgApp/Events/Insert.php"; // 🔁 change this
+    private static final String URL = ConstantSP.NET_URL+"Events/Insert.php"; // 🔁 change this
 
     public interface Callback {
         void onSuccess(String message);

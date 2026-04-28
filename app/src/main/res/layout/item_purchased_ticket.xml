@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/_20sdp"
+    android:layout_marginVertical="@dimen/_10sdp"
+    app:cardCornerRadius="@dimen/_15sdp"
+    app:cardElevation="@dimen/_5sdp"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- QR Code Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_20sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ticket_qr_thumb"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_150sdp"
+                android:scaleType="fitCenter" />
+        </LinearLayout>
+
+        <!-- Dashed Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:background="@drawable/dashed_line"
+            android:layerType="software" />
+
+        <!-- Details Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_15sdp"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/ticket_event_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Event Name"
+                android:textColor="#1A202C"
+                android:textSize="@dimen/_18sdp"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/_10sdp" />
+
+            <TextView
+                android:id="@+id/ticket_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#718096"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginBottom="@dimen/_3sdp" />
+
+            <TextView
+                android:id="@+id/ticket_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#718096"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginBottom="@dimen/_5sdp" />
+
+            <TextView
+                android:id="@+id/ticket_date_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date &amp; Time"
+                android:textColor="#4A5568"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/_5sdp" />
+
+            <TextView
+                android:id="@+id/ticket_booking_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#718096"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginBottom="@dimen/_3sdp" />
+
+            <TextView
+                android:id="@+id/ticket_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#718096"
+                android:textSize="@dimen/_13sdp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

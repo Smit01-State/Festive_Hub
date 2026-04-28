@@ -1,0 +1,65 @@
+# Festive Hub - Complete Project Documentation
+
+## 1. Project Overview
+Festive Hub is a dynamic Android application built to bridge the gap between event organizers and attendees. It provides a robust platform for discovering, managing, and booking local and global festive events. Whether you're searching for your next weekend celebration or organizing a large-scale festival, Festive Hub offers intuitive, seamless interaction. 
+
+The application recently underwent a major architectural migration from local SQLite-based data persistence to a fully RESTful API-driven architecture. This shift allows for global synchronization, centralized event management, and enhanced security with MD5 hashing. 
+
+## 2. Technical Stack
+* Platform: Android (Java)
+* Minimum SDK: 24 (Android 7.0 Nougat)
+* Target SDK: 36
+* Architecture Pattern: MVC-based approach with decoupled networking layers.
+* Networking: Google Volley
+* Image Loading: Glide for efficient network image caching and loading.
+* UI Components: Material Design components, Scalable DP (SDP) for responsive dimension support across multiple screen densities.
+* Backend System: PHP 
+* Database: MySQL (Hosted locally via XAMPP during development)
+* Build System: Gradle (Kotlin DSL migrated)
+
+## 3. Application Architecture
+### 3.1 Network Communication Layer
+A core element of the Festive Hub architecture is its modularized network interaction. The application implements HTTP requests to the PHP backend asynchronously via Volley RequestQueue. 
+The network package (com.Festive_Hub.android.network) consists of specialized API clients mapping directly to CRUD functionality:
+* Authentication & User Management: ApiClient (Signup), LoginApiClient, UpdateApiClient, DeleteApiClient.
+* Event Management: Hosted within the Event sub-package.
+    * SelectEventClient - Fetches global/categorized event lists.
+    * EventByIdClient - Queries detailed specifications for a single event.
+    * InsertEventClient, UpdateEventClient, DeleteEventClient - Facilitates the admin/manager panel operations.
+* Cart Operations: CartApiClient provides methods to add items, modify quantities, remove items, and checkout via an integrated flow.
+
+### 3.2 Data Persistence Strategy
+* SharedPreferences (ConstantSP.java): Used to persist the active user session securely on the device, minimizing repetitive login requests and serving as an access token equivalent for user-bound endpoints.
+* Session Management: Handles caching temporary UI configurations or states.
+
+### 3.3 Security Implementation
+* MD5 Password Hashing: Managed under the Hash package, ensuring that passwords and sensitive attributes have a fundamental cryptographic wrap before network transitions or when stored on the device caching layers.
+
+## 4. Key Application Features & Modules
+### 4.1. Authentication Module
+* Splash, Main & CreateAccount Activities: Handles the initial onboarding experience. Validates user sessions and safely redirects unauthenticated users to the Login/Registration screens. 
+
+### 4.2. Discover and Event Browsing
+* Dashboard & CategoryActivity: Presents a high-level UI showcasing aggregated categories. Users navigate this visual hierarchy to tailor their browsing.
+* EventActivity: Displays queried events filtered by Category.
+* EventDetailActivity: Provides all extensive information pertaining to the event (Date, Time, Location, Description). Fetches data live from the API to guarantee updated schedules and pricing. Integrates seamless "Add to Cart" and "Add to Wishlist" CTAs.
+
+### 4.3. Shopping Cart & Checkout
+* CartActivity & CartAdapter: Acts as the staging area before finalizing bookings. 
+* Live Price Calculations: Computes total cost dynamically based on fetched event datasets.
+* Checkout/Pay Now: Includes JSON exception parsing safety measures and securely processes the user's intended purchase flow. (Upcoming: QR code ticketing for successful transactions).
+
+### 4.4. Event Manager Panel (Admin)
+* EventManagerActivity & EventAddEditActivity: Restricted screens that provide organizers the capability to append new events into the primary MySQL database. Includes form validation, dynamic data mapping, and direct sync to the API.
+
+## 5. Recent System Enhancements
+Based on past iteration sprint data:
+1. Direct API Integration: Deprecated local SQLite reads in CartActivity and EventDetailActivity in favor of parsing realtime API JSON responses directly (useEventbyidClient).
+2. Structural Slimming: Successfully flattened the hierarchy by removing the redundant "Subcategory" mapping, directly binding events (cid) to their parent "Categories" for much faster query performance.
+3. Resilient JSON Parsing: Upgraded serializers to safely fallback or handle missing "data" arrays resulting from empty server responses, thereby eliminating native JSONExceptions.
+
+## 6. Future Roadmap
+1. Search Facility: Introducing a full-text dynamic search interface to filter events by name, location, and date dynamically without excessive API overhead.
+2. Payment Gateway Integration: Wrapping the "Pay Now" flow with a secure third-party processor (e.g., Stripe, Razorpay) to handle authentic fiat transactions.
+3. QR Code Generation: Issuing unique cryptographic QR codes to users as "E-Tickets" immediately post-checkout, which can be scanned at venues.
+4. UI/UX Overhaul: Continuous refinement of the application’s dynamic animations and modern touch interfaces using motion graphics and glass-morphism aesthetic.

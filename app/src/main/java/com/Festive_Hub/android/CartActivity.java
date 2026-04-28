@@ -2,6 +2,7 @@ package com.Festive_Hub.android;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ public class CartActivity extends AppCompatActivity {
     ArrayList<CartList> arrayList;
     CartAdapter adapter;
     TextView totalPriceText;
+    Button payNowBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,16 @@ public class CartActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.cart_recycler);
         totalPriceText = findViewById(R.id.cart_total_price);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        payNowBtn = findViewById(R.id.cart_pay_now_btn);
+        payNowBtn.setOnClickListener(v -> {
+            if (arrayList == null || arrayList.isEmpty()) {
+                Toast.makeText(CartActivity.this, "Your cart is empty!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(CartActivity.this, "Redirecting to Payment Gateway...", Toast.LENGTH_SHORT).show();
+                // TODO: Add Payment Gateway Integration here
+            }
+        });
 
         loadCartData();
     }

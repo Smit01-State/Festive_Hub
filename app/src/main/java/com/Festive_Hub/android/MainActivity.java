@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                         } else {
 
                             // ── Get values from fields ────────────────
-                            String email    = Email.getText().toString().trim();
+                            String email = Email.getText().toString().trim();
                             String password = Password.getText().toString().trim();
                             String HashPassword = MD5Hash.md5Hash(password);
 
@@ -87,15 +87,15 @@ public class MainActivity extends AppCompatActivity {
                             // ── Call API instead of SQLite ────────────
                             LoginApiClient loginApiClient = new LoginApiClient(MainActivity.this);
 
-                            loginApiClient.loginUser(email, HashPassword , new LoginApiClient.LoginCallback() {
+                            loginApiClient.loginUser(email, HashPassword, new LoginApiClient.LoginCallback() {
 
                                 @Override
                                 public void onSuccess(JSONObject userData) throws JSONException {
 
+
+
                                     // ── Save to SharedPreferences ─────
                                     // same sp.edit() you were doing before
-
-
                                     sp.edit().putString(ConstantSP.USERID, userData.getString("userid")).apply();
                                     sp.edit().putString(ConstantSP.NAME, userData.getString("name")).apply();
                                     sp.edit().putString(ConstantSP.EMAIL, userData.getString("email")).apply();

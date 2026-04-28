@@ -1,6 +1,7 @@
 package com.Festive_Hub.android.network;
 import android.content.Context;
 
+import com.Festive_Hub.android.ConstantSP;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 public class DeleteApiClient {
 
-    private static final String DELETE_URL = "http://10.0.2.2/FinalGpgApp/deleteProfile.php";
+    private static final String DELETE_URL = ConstantSP.NET_URL+"deleteProfile.php";
 
     public interface DeleteUserCallback {
         void onSuccess(String message);

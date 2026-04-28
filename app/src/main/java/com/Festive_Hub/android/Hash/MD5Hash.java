@@ -1,12 +1,14 @@
 package com.Festive_Hub.android.Hash;
 
+import androidx.annotation.NonNull;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class MD5Hash { // integrity
 
-    public static String md5Hash(String password) {
+    public static String md5Hash (@NonNull String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("MD5");
             byte[] hashBytes = digest.digest(password.getBytes(StandardCharsets.UTF_8));

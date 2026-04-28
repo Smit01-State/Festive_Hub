@@ -2,6 +2,7 @@ package com.Festive_Hub.android.network.Event;
 
 import android.content.Context;
 
+import com.Festive_Hub.android.ConstantSP;
 import com.Festive_Hub.android.network.AppController;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -13,7 +14,7 @@ import org.json.JSONObject;
 
 public class SelectEventClient {
 
-    private static final String URL = "http://10.0.2.2/FinalGpgApp/Events/View.php"; // 🔁 change this
+    private static final String URL = ConstantSP.NET_URL+"Events/View.php"; // 🔁 change this
 
     public interface Callback {
         void onFetched(JSONArray events);

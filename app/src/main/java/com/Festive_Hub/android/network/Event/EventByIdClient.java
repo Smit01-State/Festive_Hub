@@ -3,6 +3,7 @@ package com.Festive_Hub.android.network.Event;
 import android.content.Context;
 import android.util.Log;
 
+import com.Festive_Hub.android.ConstantSP;
 import com.Festive_Hub.android.network.AppController;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,7 +17,7 @@ import java.util.Map;
 
 public class EventByIdClient {
 
-    private static final String BASE_URL = "http://10.0.2.2/FinalGpgApp/";
+    private static final String BASE_URL = ConstantSP.NET_URL;
     private Context context;
 
     // ── Constructor ──────────────────────────────────

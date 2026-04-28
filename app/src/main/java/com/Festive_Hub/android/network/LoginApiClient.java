@@ -3,6 +3,7 @@ package com.Festive_Hub.android.network;
 import android.content.Context;
 import android.util.Log;
 
+import com.Festive_Hub.android.ConstantSP;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -16,7 +17,7 @@ import java.util.Map;
 
 public class LoginApiClient {
 
-    private static final String BASE_URL = "http://10.0.2.2/FinalGpgApp/";
+    private static final String BASE_URL = ConstantSP.NET_URL;
     private Context context;
 
     // ── Constructor ──────────────────────────────────
@@ -47,12 +48,14 @@ public class LoginApiClient {
                     Log.d("LOGIN_RESPONSE", response);
                     try {
                         JSONObject json = new JSONObject(response);
+
                         // common
                         // ── "status" — matches your PHP ──
                         boolean status = json.getBoolean("status");
 
                         if (status) {
                             callback.onSuccess(json);
+
                         } else {
                             callback.onError(json.getString("message"));
                         }

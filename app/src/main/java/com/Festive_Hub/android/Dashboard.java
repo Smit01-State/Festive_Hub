@@ -113,9 +113,10 @@ public class Dashboard extends AppCompatActivity {
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(Dashboard.this, profileBtn);
                 popupMenu.getMenu().add(0, 1, 0, "Profile Edit");
-                popupMenu.getMenu().add(0, 4, 1, "Event Manager");
-                popupMenu.getMenu().add(0, 2, 2, "Logout");
-                popupMenu.getMenu().add(0, 3, 3, "Delete Account");
+                popupMenu.getMenu().add(0, 5, 1, "My Tickets");
+                popupMenu.getMenu().add(0, 4, 2, "Event Manager");
+                popupMenu.getMenu().add(0, 2, 3, "Logout");
+                popupMenu.getMenu().add(0, 3, 4, "Delete Account");
 
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
@@ -132,6 +133,9 @@ public class Dashboard extends AppCompatActivity {
                             showDeleteDialog();
                         } else if (id == 4) {
                             Intent intent = new Intent(Dashboard.this, EventManagerActivity.class);
+                            startActivity(intent);
+                        } else if (id == 5) {
+                            Intent intent = new Intent(Dashboard.this, PurchasedTicketsActivity.class);
                             startActivity(intent);
                         }
                         return true;

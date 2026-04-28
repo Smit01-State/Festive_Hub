@@ -12,6 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.Festive_Hub.android.network.Cart.CartApiClient;
 import com.bumptech.glide.Glide;
+import android.graphics.Bitmap;
+import android.app.AlertDialog;
+import android.widget.ImageView;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 public class EventDetailActivity extends AppCompatActivity {
 
@@ -69,7 +75,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
         // Pay Now Click
         payNowBtn.setOnClickListener(v -> {
-            Toast.makeText(EventDetailActivity.this, "Proceeding to Payment...", Toast.LENGTH_SHORT).show();
+            showQRCodeDialog();
         });
     }
 
@@ -100,6 +106,7 @@ public class EventDetailActivity extends AppCompatActivity {
         db.execSQL(
                 "CREATE TABLE IF NOT EXISTS CART(ID INTEGER PRIMARY KEY AUTOINCREMENT, EVENTID INTEGER, QTY INTEGER)");
         db.execSQL("CREATE TABLE IF NOT EXISTS WISHLIST(ID INTEGER PRIMARY KEY AUTOINCREMENT, EVENTID INTEGER)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS PURCHASED_TICKETS(ID INTEGER PRIMARY KEY AUTOINCREMENT, EVENT_NAME VARCHAR, VENDOR_NAME VARCHAR, DATE VARCHAR, TIME VARCHAR, LOCATION VARCHAR, QTY INTEGER, TOTAL_PAID DOUBLE, QR_DATA TEXT)");
     }
 
     private void loadDataFromSP() {
@@ -275,5 +282,65 @@ public class EventDetailActivity extends AppCompatActivity {
                 Toast.makeText(EventDetailActivity.this, "Error updating quantity", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void showQRCodeDialog() {
+        double price = 0.0;
+        try {
+            price = Double.parseDouble(sDiscountPrice);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        double totalAmount = price * currentQty;
+
+        String qrData = "Event: " + sName + "\n" +
+                "Vendor: " + sVendor + "\n" +
+                "Date: " + sDate + "\n" +
+                "Time: " + sTime + "\n" +
+                "Location: " + sLocation + "\n" +
+                "Quantity: " + currentQty + "\n" +
+                "Total Paid: " + ConstantSP.PRICE_SYMBOL + totalAmount;
+
+        try {
+            android.content.ContentValues cv = new android.content.ContentValues();
+            cv.put("EVENT_NAME", sName);
+            cv.put("VENDOR_NAME", sVendor);
+            cv.put("DATE", sDate);
+            cv.put("TIME", sTime);
+            cv.put("LOCATION", sLocation);
+            cv.put("QTY", currentQty);
+            cv.put("TOTAL_PAID", totalAmount);
+            cv.put("QR_DATA", qrData);
+            db.insert("PURCHASED_TICKETS", null, cv);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Bitmap qrBitmap = generateQRCode(qrData);
+
+        if (qrBitmap != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            ImageView qrImageView = new ImageView(this);
+            qrImageView.setImageBitmap(qrBitmap);
+            qrImageView.setPadding(50, 50, 50, 50);
+
+            builder.setView(qrImageView);
+            builder.setTitle("Payment Successful - Ticket");
+            builder.setMessage("Scan this QR code at the venue.");
+            builder.setPositiveButton("Close", (dialog, which) -> dialog.dismiss());
+            builder.show();
+        } else {
+            Toast.makeText(this, "Failed to generate QR Code", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private Bitmap generateQRCode(String data) {
+        try {
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            return barcodeEncoder.encodeBitmap(data, BarcodeFormat.QR_CODE, 800, 800);
+        } catch (WriterException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

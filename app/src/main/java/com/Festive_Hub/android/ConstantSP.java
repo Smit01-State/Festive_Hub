@@ -2,6 +2,7 @@ package com.Festive_Hub.android;
 
 public class ConstantSP {
 
+    public static final String NET_URL = "http://10.0.2.2/FinalGpgApp/";
     public static final String PRICE_SYMBOL= "₹";
 
     public static String PREF = "prer";

@@ -60,6 +60,9 @@
         <activity
             android:name=".EventAddEditActivity"
             android:exported="false" />
+        <activity
+            android:name=".PurchasedTicketsActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

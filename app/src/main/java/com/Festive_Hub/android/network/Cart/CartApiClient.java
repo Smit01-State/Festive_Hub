@@ -2,6 +2,7 @@ package com.Festive_Hub.android.network.Cart;
 
 import android.content.Context;
 
+import com.Festive_Hub.android.ConstantSP;
 import com.Festive_Hub.android.network.AppController;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,7 +17,7 @@ import java.util.Map;
 
 public class CartApiClient {
 
-    private static final String URL = "http://10.0.2.2/FinalGpgApp/Cart/Cart.php";
+    private static final String URL = ConstantSP.NET_URL + "Cart/Cart.php";
 
     // ─────────────────────────────────────────────────────────────
     // Callback Interface
@@ -31,7 +32,9 @@ public class CartApiClient {
     // ─────────────────────────────────────────────────────────────
     public static void addToCart(Context context, int uid, int eventId, int qty,
                                  CartCallback callback) {
+
         RequestQueue queue = AppController.getInstance(context).getRequestQueue();
+
         StringRequest request = new StringRequest(Request.Method.POST, URL,
                 response -> {
                     try {
