@@ -16,11 +16,11 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/_12sdp"
         android:text="My Wishlist"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSurface"
         android:textSize="@dimen/_18sdp"
         android:textStyle="bold"
         android:gravity="center"
-        android:background="@color/white"
+        android:background="?attr/colorSurface"
         android:elevation="@dimen/_2sdp" />
 
     <androidx.recyclerview.widget.RecyclerView

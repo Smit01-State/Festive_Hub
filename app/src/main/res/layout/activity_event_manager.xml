@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/of_white">
+    android:background="?android:attr/colorBackground">
 
     <TextView
         android:id="@+id/title_manage_events"
@@ -10,13 +10,15 @@
         android:layout_height="wrap_content"
         android:text="Manage Events"
         android:textSize="20sp"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSurface"
         android:textStyle="bold"
         android:gravity="center"
-        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_30sdp"
         android:padding="@dimen/_15sdp"
-        android:background="@color/white"
-        android:elevation="4dp" />
+        android:background="?attr/colorSurface"
+        android:elevation="4dp"
+        android:clipToPadding="false"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_manage_events"

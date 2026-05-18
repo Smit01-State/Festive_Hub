@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/of_white">
+    android:background="?android:attr/colorBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,10 +16,12 @@
             android:layout_height="wrap_content"
             android:text="Add New Event"
             android:textSize="22sp"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnSurface"
             android:textStyle="bold"
             android:gravity="center"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:paddingTop="@dimen/_30sdp"
+            />
 
         <EditText
             android:id="@+id/et_event_name"
@@ -41,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Select Event Category"
-            android:textColor="@color/gray"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:layout_marginTop="12dp"
             android:layout_marginStart="4dp" />
 
@@ -52,30 +54,13 @@
             android:background="@android:drawable/btn_dropdown"
             android:layout_marginTop="4dp" />
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/et_event_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="12dp">
-
-            <EditText
-                android:id="@+id/et_event_price"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:hint="Price (₹)"
-                android:inputType="numberDecimal"
-                android:layout_marginEnd="6dp" />
-
-            <EditText
-                android:id="@+id/et_event_disc_price"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:hint="Disc. Price"
-                android:inputType="numberDecimal"
-                android:layout_marginStart="6dp" />
-        </LinearLayout>
+            android:hint="Price (₹)"
+            android:inputType="numberDecimal"
+            android:layout_marginTop="12dp" />
 
         <EditText
             android:id="@+id/et_event_discount"
@@ -89,7 +74,7 @@
             android:id="@+id/et_event_image_url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Image Name"
+            android:hint="Image Link"
             android:inputType="text"
             android:layout_marginTop="12dp" />
             

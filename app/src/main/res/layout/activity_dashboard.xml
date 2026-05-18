@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/of_white"
+    android:background="?android:attr/colorBackground"
     tools:context=".Dashboard">
 
     <!-- Top Bar -->
@@ -87,7 +87,7 @@
         android:layout_marginTop="@dimen/_16sdp"
         android:layout_marginBottom="@dimen/_8sdp"
         android:text="Event Categories"
-        android:textColor="@color/gray"
+        android:textColor="?attr/colorOnSurfaceVariant"
         android:textSize="@dimen/_16sdp"
         android:textStyle="bold" />
 

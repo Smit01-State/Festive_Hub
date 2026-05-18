@@ -43,7 +43,7 @@ public class PurchasedTicketAdapter extends RecyclerView.Adapter<PurchasedTicket
 
         holder.ticketId.setText(android.text.Html.fromHtml("Ticket ID: <b>#TKT" + ticket.getId() + "</b>",
                 android.text.Html.FROM_HTML_MODE_LEGACY));
-        holder.ticketName.setText(android.text.Html.fromHtml("Ticket name: <b>" + ticket.getVendorName() + " Pass</b>",
+        holder.location.setText(android.text.Html.fromHtml("Location: <b>" + ticket.getLocation() + "</b>",
                 android.text.Html.FROM_HTML_MODE_LEGACY));
 
         holder.dateTime.setText(ticket.getDate() + " " + ticket.getTime());
@@ -85,14 +85,14 @@ public class PurchasedTicketAdapter extends RecyclerView.Adapter<PurchasedTicket
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView qrThumb;
-        TextView eventName, ticketId, ticketName, dateTime, bookingId, ticketType;
+        TextView eventName, ticketId, location, dateTime, bookingId, ticketType;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             qrThumb = itemView.findViewById(R.id.ticket_qr_thumb);
             eventName = itemView.findViewById(R.id.ticket_event_name);
             ticketId = itemView.findViewById(R.id.ticket_id);
-            ticketName = itemView.findViewById(R.id.ticket_name);
+            location = itemView.findViewById(R.id.ticket_name);
             dateTime = itemView.findViewById(R.id.ticket_date_time);
             bookingId = itemView.findViewById(R.id.ticket_booking_id);
             ticketType = itemView.findViewById(R.id.ticket_type);

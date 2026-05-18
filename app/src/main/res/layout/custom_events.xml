@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="@dimen/_10sdp"
-    android:background="@color/white"
+    android:background="?attr/colorSurface"
     android:layout_marginVertical="@dimen/_5sdp">
 
     <androidx.cardview.widget.CardView
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Event Name"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnSurface"
             android:textSize="@dimen/_16sdp"
             android:textStyle="bold"
             android:maxLines="2"
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_4sdp"
             android:text="Vendor Name"
-            android:textColor="@color/gray"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:textSize="@dimen/_12sdp" />
 
         <TextView
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_4sdp"
             android:text="Date: Example Date"
-            android:textColor="@color/gray"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:textSize="@dimen/_11sdp" />
 
         <TextView
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"
             android:text="Time: 10:00 AM"
-            android:textColor="@color/gray"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:textSize="@dimen/_11sdp" />
 
         <TextView
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"
             android:text="Location: Event Venue"
-            android:textColor="@color/gray"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:textSize="@dimen/_11sdp" />
 
         <LinearLayout
@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="₹399"
-                android:textColor="@color/black"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold" />
 
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:text="₹599"
-                android:textColor="@color/gray"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:textSize="@dimen/_11sdp" />
 
             <TextView
@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:text="18%"
-                android:textColor="@color/black"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="@dimen/_11sdp"
                 android:textStyle="bold" />
 

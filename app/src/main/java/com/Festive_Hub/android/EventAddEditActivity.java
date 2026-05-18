@@ -13,13 +13,14 @@ import com.Festive_Hub.android.network.Event.UpdateEventClient;
 
 public class EventAddEditActivity extends AppCompatActivity {
 
-    EditText etName, etVendor, etPrice, etDiscPrice, etDiscount, etImage, etDate, etTime, etLocation;
+    EditText etName, etVendor, etPrice, etDiscount, etImage, etDate, etTime, etLocation;
     Spinner spinnerCategory;
-    int[] categoryIds = {1, 2, 3, 4, 5, 6};
-    String[] categoryNames = {"Religious Festivals", "Cultural Festivals", "Music & Arts", "Food Festivals", "Tech Expos", "Sports Events"};
+    int[] categoryIds = { 1, 2, 3, 4, 5, 6 };
+    String[] categoryNames = { "Religious Festivals", "Cultural Festivals", "Music & Arts", "Food Festivals",
+            "Tech Expos", "Sports Events" };
     Button btnSave;
     TextView title;
-    
+
     boolean isEdit = false;
     int eventId = -1;
 
@@ -32,10 +33,10 @@ public class EventAddEditActivity extends AppCompatActivity {
         etName = findViewById(R.id.et_event_name);
         etVendor = findViewById(R.id.et_vendor_name);
         spinnerCategory = findViewById(R.id.spinner_category);
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categoryNames);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,
+                categoryNames);
         spinnerCategory.setAdapter(spinnerAdapter);
         etPrice = findViewById(R.id.et_event_price);
-        etDiscPrice = findViewById(R.id.et_event_disc_price);
         etDiscount = findViewById(R.id.et_event_discount);
         etImage = findViewById(R.id.et_event_image_url);
         etDate = findViewById(R.id.et_event_date);
@@ -57,7 +58,6 @@ public class EventAddEditActivity extends AppCompatActivity {
                 }
             }
             etPrice.setText(getIntent().getStringExtra("price"));
-            etDiscPrice.setText(getIntent().getStringExtra("disc_price"));
             etDiscount.setText(getIntent().getStringExtra("discount"));
             etImage.setText(getIntent().getStringExtra("image"));
             etDate.setText(getIntent().getStringExtra("event_date"));
@@ -74,8 +74,24 @@ public class EventAddEditActivity extends AppCompatActivity {
         int selectedPosition = spinnerCategory.getSelectedItemPosition();
         int cid = categoryIds[selectedPosition];
         String price = etPrice.getText().toString().trim();
-        String discPrice = etDiscPrice.getText().toString().trim();
         String discount = etDiscount.getText().toString().trim();
+        String discPrice = price;
+        try {
+            if (!price.isEmpty() && !discount.isEmpty()) {
+                double priceVal = Double.parseDouble(price);
+                String numericDiscount = discount.replaceAll("[^0-9.]", "");
+                if (!numericDiscount.isEmpty()) {
+                    double discountVal = Double.parseDouble(numericDiscount);
+                    double calculatedDiscPrice = priceVal - (priceVal * discountVal / 100);
+                    discPrice = String.valueOf(calculatedDiscPrice);
+                    if (discPrice.endsWith(".0")) {
+                        discPrice = discPrice.substring(0, discPrice.length() - 2);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         String image = etImage.getText().toString().trim();
         String date = etDate.getText().toString().trim();
         String time = etTime.getText().toString().trim();
@@ -87,31 +103,33 @@ public class EventAddEditActivity extends AppCompatActivity {
         }
 
         if (isEdit) {
-            UpdateEventClient.execute(this, eventId, cid, vendor, name, price, discPrice, discount, image, date, time, location, new UpdateEventClient.Callback() {
-                @Override
-                public void onSuccess(String message) {
-                    Toast.makeText(EventAddEditActivity.this, "Event Updated!", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
+            UpdateEventClient.execute(this, eventId, cid, vendor, name, price, discPrice, discount, image, date, time,
+                    location, new UpdateEventClient.Callback() {
+                        @Override
+                        public void onSuccess(String message) {
+                            Toast.makeText(EventAddEditActivity.this, "Event Updated!", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
 
-                @Override
-                public void onError(String error) {
-                    Toast.makeText(EventAddEditActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
-                }
-            });
+                        @Override
+                        public void onError(String error) {
+                            Toast.makeText(EventAddEditActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
         } else {
-            InsertEventClient.execute(this, cid, vendor, name, price, discPrice, discount, image, date, time, location, new InsertEventClient.Callback() {
-                @Override
-                public void onSuccess(String message) {
-                    Toast.makeText(EventAddEditActivity.this, "Event Added!", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
+            InsertEventClient.execute(this, cid, vendor, name, price, discPrice, discount, image, date, time, location,
+                    new InsertEventClient.Callback() {
+                        @Override
+                        public void onSuccess(String message) {
+                            Toast.makeText(EventAddEditActivity.this, "Event Added!", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
 
-                @Override
-                public void onError(String error) {
-                    Toast.makeText(EventAddEditActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
-                }
-            });
+                        @Override
+                        public void onError(String error) {
+                            Toast.makeText(EventAddEditActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
     }
 }

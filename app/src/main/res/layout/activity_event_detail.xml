@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/of_white"
+    android:background="?android:attr/colorBackground"
     android:padding="@dimen/_10sdp"
     tools:context=".EventDetailActivity">
 
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Vendor Name"
-                android:textColor="@color/gray"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold"
                 android:layout_marginTop="@dimen/_10sdp" />
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Product Name"
-                android:textColor="@color/black"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_4sdp" />
 
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date: 2024-10-31"
-                android:textColor="@color/gray"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:textSize="@dimen/_13sdp"
                 android:layout_marginTop="@dimen/_4sdp" />
 
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Time: 10:00 AM"
-                android:textColor="@color/gray"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:textSize="@dimen/_13sdp"
                 android:layout_marginTop="@dimen/_2sdp" />
 
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Location: Event Venue"
-                android:textColor="@color/gray"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:textSize="@dimen/_13sdp"
                 android:layout_marginTop="@dimen/_2sdp" />
 
@@ -88,7 +88,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="₹399"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/colorOnSurface"
                     android:textSize="@dimen/_15sdp"
                     android:textStyle="bold" />
 
@@ -97,7 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="₹599"
-                    android:textColor="@color/gray"
+                    android:textColor="?attr/colorOnSurfaceVariant"
                     android:textSize="@dimen/_13sdp"
                     android:layout_marginStart="@dimen/_8sdp" />
 
@@ -106,7 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="18%"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/colorOnSurface"
                     android:textSize="@dimen/_13sdp"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:textStyle="bold" />
@@ -154,7 +154,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="5"
-                        android:textColor="@color/black"
+                        android:textColor="?attr/colorOnSurface"
                         android:textSize="@dimen/_24sdp"
                         android:layout_marginHorizontal="@dimen/_15sdp" />
 
